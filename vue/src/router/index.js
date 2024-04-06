@@ -6,6 +6,8 @@ import HomeView from '../views/HomeView.vue';
 import LoginView from '../views/LoginView.vue';
 import LogoutView from '../views/LogoutView.vue';
 import RegisterView from '../views/RegisterView.vue';
+import SearchView from '../views/SearchView.vue';
+import ListRecipesView from '../views/ListRecipesView.vue';
 
 /**
  * The Vue Router is used to "direct" the browser to render a specific view component
@@ -47,7 +49,25 @@ const routes = [
     meta: {
       requiresAuth: false
     }
+  },
+  {
+    path: "/search",
+    name: "search",
+    component: SearchView,
+    meta: {
+      requiresAuth: false
+    }
+
+  },
+  {
+    path: "/spoon",
+    name: "spoon",
+    component: ListRecipesView,
+    meta: {
+      requiresAuth: false
+    }
   }
+
 ];
 
 // Create the router
