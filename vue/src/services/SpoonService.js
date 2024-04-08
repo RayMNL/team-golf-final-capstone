@@ -1,16 +1,19 @@
 import axios from "axios";
 
 const baseUrl = "https://api.spoonacular.com/recipes/";
-const apiKey= "&apiKey=f739f73488e14c5298d73ab26ddec367"
+const apiKey= "&apiKey=250b663cb5c4495fb447c0c6ab6f005e";
+const searchUrl = "https://api.spoonacular.com/recipes/complexSearch?query=";
 
 const newAxiosInstance = axios.create();
 
 export default {
 
     getRandomRecipes() {
-        return newAxiosInstance.get(baseUrl + 'random?number=36' + apiKey)
-    }
+        return newAxiosInstance.get(baseUrl + 'random?number=100' + apiKey)
+    },
 
-    
+    searchForWord(word) {
+        return newAxiosInstance.get(searchUrl + word + apiKey)
+    }
 
 }
