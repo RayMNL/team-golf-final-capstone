@@ -145,7 +145,7 @@ export default {
 }
 
 .recipe-card {
-    width: calc(25% - 35px);
+    width: calc(25% - 39px);
     margin-bottom: 20px;
     border: 1px solid rgb(204, 204, 204);
     border-radius: 5px;

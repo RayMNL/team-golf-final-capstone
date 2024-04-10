@@ -26,6 +26,10 @@ public class Recipe {
     public Recipe() {
     }
 
+    public Recipe(List<ExtendedIngredient> ingredients) {
+        this.ingredients = ingredients;
+    }
+
     public int getRecipeId() {
         return recipeId;
     }
