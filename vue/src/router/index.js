@@ -6,7 +6,6 @@ import HomeView from '../views/HomeView.vue';
 import LoginView from '../views/LoginView.vue';
 import LogoutView from '../views/LogoutView.vue';
 import RegisterView from '../views/RegisterView.vue';
-import SearchView from '../views/SearchView.vue';
 import ListRecipesView from '../views/ListRecipesView.vue';
 
 /**
@@ -49,15 +48,6 @@ const routes = [
     meta: {
       requiresAuth: false
     }
-  },
-  {
-    path: "/search",
-    name: "search",
-    component: SearchView,
-    meta: {
-      requiresAuth: false
-    }
-
   },
   {
     path: "/spoon",

@@ -12,14 +12,14 @@
 <style scoped>
 a:-webkit-any-link {
 
-  background-color: #ACC8E5;
+  background-color: lightgreen;
   color: #112A46;
-  border-radius: 5px;
+  
 
 }
 
 #capstone-app {
-  background-color: #B3542B;
+  background-color: lightsalmon;
   
 }
 
