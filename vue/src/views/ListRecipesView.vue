@@ -1,4 +1,5 @@
 <template>
+
     <div class="container">
         <h1>Recipes</h1>
         <input type="text" v-model="searchQuery" placeholder="Search recipes..." class="search-bar">
@@ -49,8 +50,11 @@
                     <p>No recipes with images found.</p>
                 </div>
             </div>
+
+  
         </div>
     </div>
+
 </template>
 
 <script>
@@ -130,18 +134,17 @@ export default {
 
 <style scoped>
 .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
 }
 
 .recipe-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    gap: 20px;
-    margin-right: auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 20px;
+  margin-right: auto;
 }
 
 .recipe-card {
@@ -165,49 +168,48 @@ export default {
 }
 
 .recipe-details {
-    padding: 10px;
+  padding: 10px;
 }
 
 .recipe-title {
-    margin: 0;
+  margin: 0;
 }
 
 .recipe-tags {
-    margin-top: 10px;
+  margin-top: 10px;
 }
 
 .tag {
-    display: inline-block;
-    margin-right: 5px;
-    padding: 3px 6px;
-    background-color: #F0F0F0;
-    border-radius: 5px;
-    font-size: 12px;
-    cursor: pointer;
+  display: inline-block;
+  margin-right: 5px;
+  padding: 3px 6px;
+  background-color: #F0F0F0;
+  border-radius: 5px;
+  font-size: 12px;
+  cursor: pointer;
 }
 
 .tag.selected {
-    background-color: #007bff;
-    color: #fff;
+  background-color: #007bff;
+  color: #fff;
 }
 
 .last-row-card {
-    width: 100%;
+  width: 100%;
 
 }
 
 .search-bar {
-    width: 97%;
-    margin-bottom: 20px;
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    align-self: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
+  width: 97%;
+  margin-bottom: 20px;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  align-self: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 div.recipe-card,
