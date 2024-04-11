@@ -1,8 +1,8 @@
 <template>
     <div class="container">
-        <h1>Recipes</h1>
         <input type="text" v-model="searchQuery" placeholder="Search recipes..." class="search-bar" v-if="!selectedRecipe">
         <div class="tags-container" v-if="!selectedRecipe">
+            <label for="filter">Filter: </label>
             <span class="tag" v-for="tag in allTags" :key="tag" @click="toggleTag(tag)"
                 :class="{ 'selected': isSelected(tag) }">{{ tag }}</span>
         </div>
@@ -207,7 +207,7 @@ export default {
 
 div.recipe-card,
 div.recipe-details {
-    background-color: rgb(253, 226, 149);
+    background-color: #40E0D0;
 }
 
 div.tags-container {
