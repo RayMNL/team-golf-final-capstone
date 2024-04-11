@@ -1,11 +1,11 @@
 package com.techelevator.dao;
 
 import com.techelevator.model.Recipe;
+
+import java.security.Principal;
+
 public interface RecipeDao {
 
-Recipe getRecipeById(int recipeId);
 
-int addRecipeToUserLibrary(int recipeId, int UserId);
-
-Recipe[] getRecipeByUserId(int userId);
+    void addRecipeToDatabaseAndUsersList(int userId, int recipeId);
 }

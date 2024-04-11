@@ -1,6 +1,6 @@
 BEGIN TRANSACTION;
 
-DROP TABLE IF EXISTS users, user_recipes, recipes_ingredients, ingredients, recipes;
+DROP TABLE IF EXISTS user_recipes, recipes_ingredients, ingredients, recipes, users;
 
 CREATE TABLE users (
 	user_id SERIAL,

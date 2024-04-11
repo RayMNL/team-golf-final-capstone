@@ -11,12 +11,12 @@ public class ApiRecipeDao implements RecipeDao{
 
     private static final RestTemplate restTemplate = new RestTemplate();
 
-    public Recipe[] listOfUsersRecipes(id[]) {
+    //public Recipe[] listOfUsersRecipes(id[]) {
         String url = baseUrl + "informationBulk?ids=" ;
         Recipe[] usersRecipes = restTemplate.getForObject(url, Recipe[].class);
-        return usersRecipes;
+       // return usersRecipes;
 
-    }
+    //}
 
     public String getIdStringForRecipes(Recipe[] recipes) {
 

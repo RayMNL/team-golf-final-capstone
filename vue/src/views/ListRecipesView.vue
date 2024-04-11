@@ -8,6 +8,7 @@
         </div>
         <div v-if="selectedRecipe">
             <button @click="selectedRecipe = null" id="back-to-recipes-button">Back to Recipes</button>
+            <button @click="addToLibrary(selectedRecipe.id)" id="add-to-recipe-library-button">Add to Recipe Library</button>
             <div class="full-recipe">
                 <img :src="selectedRecipe.image" :alt="selectedRecipe.title" class="recipe-image">
                 <div class="recipe-details">
@@ -55,6 +56,7 @@
 
 <script>
 import SpoonService from '@/services/SpoonService'
+import LocalApiService from '../services/LocalApiService';
 
 export default {
     data() {
@@ -106,6 +108,16 @@ export default {
         showRecipe(recipe) {
             this.selectedRecipe = recipe;
             this.isRecipeSelected = true; 
+        },
+        addToLibrary(recipeId) {
+            console.log("add to library of list recipes view: ", recipeId)
+            LocalApiService.addToLibrary(recipeId)
+                .then(response => {
+                    console.log(response.data);
+                })
+                .catch(error => {
+                    console.error('Error adding recipe to library:', error);
+                });
         }
     }
 }
