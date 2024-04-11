@@ -1,9 +1,8 @@
 <template>
-
     <div class="container">
         <h1>Recipes</h1>
-        <input type="text" v-model="searchQuery" placeholder="Search recipes..." class="search-bar">
-        <div class="tags-container">
+        <input type="text" v-model="searchQuery" placeholder="Search recipes..." class="search-bar" v-if="!selectedRecipe">
+        <div class="tags-container" v-if="!selectedRecipe">
             <span class="tag" v-for="tag in allTags" :key="tag" @click="toggleTag(tag)"
                 :class="{ 'selected': isSelected(tag) }">{{ tag }}</span>
         </div>
@@ -50,15 +49,11 @@
                     <p>No recipes with images found.</p>
                 </div>
             </div>
-
-  
         </div>
     </div>
-
 </template>
 
 <script>
-
 import SpoonService from '@/services/SpoonService'
 
 export default {
@@ -68,17 +63,15 @@ export default {
             searchQuery: '',
             selectedTags: [],
             allTags: [],
-            selectedRecipe: null
+            selectedRecipe: null,
+            isRecipeSelected: false 
         }
     },
     computed: {
         filteredRecipes() {
             return this.recipes.filter(recipe => {
-
                 const titleMatches = recipe.title.toLowerCase().includes(this.searchQuery.toLowerCase());
-
                 const allTagsMatch = this.selectedTags.every(tag => recipe.diets.includes(tag));
-
                 return titleMatches && allTagsMatch;
             });
         }
@@ -94,7 +87,6 @@ export default {
             }).catch(err => console.error(err));
         },
         toggleTag(tag) {
-
             if (this.isSelected(tag)) {
                 this.selectedTags = this.selectedTags.filter(selectedTag => selectedTag !== tag);
             } else {
@@ -102,11 +94,9 @@ export default {
             }
         },
         isSelected(tag) {
-
             return this.selectedTags.includes(tag);
         },
         getAllTags() {
-
             const tagsSet = new Set();
             this.recipes.forEach(recipe => {
                 recipe.diets.forEach(diet => tagsSet.add(diet));
@@ -115,17 +105,8 @@ export default {
         },
         showRecipe(recipe) {
             this.selectedRecipe = recipe;
-        },
-        /* addToLibrary(recipeId) {
-            SpoonService.getListOfRecipes(recipeId)
-                .then(response => {
-                    console.log(response.data);
-                })
-                .catch(error => {
-                    console.error('Error adding recipe to library:', error);
-                });
-        } */
-        // ADD THIS UNDER BACK TO RECIPES BUTTON: <button @click="addToLibrary(recipeId)" id="add-to-recipe-library-button">Add to Recipe Library</button>
+            this.isRecipeSelected = true; 
+        }
     }
 }
 </script>
