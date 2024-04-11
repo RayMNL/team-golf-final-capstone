@@ -175,9 +175,9 @@ export default {
 .tag {
   display: inline-block;
   margin-right: 5px;
-  padding: 3px 6px;
-  background-color: #F0F0F0;
-  border-radius: 5px;
+  padding: 3px 8px; 
+  background-color: #DDDDDD;
+  border-radius: 15px; 
   font-size: 12px;
   cursor: pointer;
 }

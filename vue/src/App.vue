@@ -11,6 +11,11 @@
 </template>
 
 <style scoped>
+body {
+  margin: 0;
+  padding: 0;
+}
+
 #capstone-app {
   background-color: #f8f9fa;
   margin: 0 !important;
