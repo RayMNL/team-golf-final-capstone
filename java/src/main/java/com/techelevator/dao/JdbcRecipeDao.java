@@ -57,7 +57,7 @@ public class JdbcRecipeDao implements RecipeDao{
 
         SqlRowSet rows = jdbcTemplate.queryForRowSet(sql, recipeId);
         while (rows.next()) {
-            ingredients.add(new ExtendedIngredient(rows.getString("name")));
+            // ingredients.add(new ExtendedIngredient(rows.getString("name")));
         }
         return ingredients;
     }
