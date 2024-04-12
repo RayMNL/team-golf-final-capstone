@@ -9,7 +9,9 @@
         <div v-if="selectedRecipe">
             <button class="button" @click="selectedRecipe = null" id="back-to-recipes-button">Back to Recipes</button>
             <button class="button" @click="addToLibrary(selectedRecipe.id)" id="add-to-recipe-library-button">Add to Recipe Library</button>
-            <p v-if="showMessage">{{ message }}</p>
+            <div id="success-message" v-if="showMessage" class="success-banner">
+        {{ message }}
+    </div>
             <div class="full-recipe">
                 <img :src="selectedRecipe.image" :alt="selectedRecipe.title" class="recipe-image">
                 <div class="recipe-details">
@@ -285,8 +287,20 @@ div.recipe-details {
   text-decoration: none;
 }
 
-
 .button:hover {
   background-color: #dddddd; 
+}
+
+.success-banner {
+    position: fixed; 
+    top: 20px; 
+    left: 50%;
+    transform: translateX(-50%); 
+    background-color: #495057;
+    color: white;
+    padding: 15px 20px;
+    border-radius: 5px;
+    z-index: 9999;
+    text-align: center;
 }
 </style>
