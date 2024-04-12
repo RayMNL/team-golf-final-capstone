@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.List;
+
 @CrossOrigin
 @RestController
 public class RecipeController {
@@ -44,6 +47,27 @@ private JdbcUserDao jdbcUserDao;
         }
     }
 
-
+    @RequestMapping(path = "/users/recipes", method = RequestMethod.GET)
+    public ResponseEntity<List<Recipe>> getUserRecipes(Principal principal) {
+        if (principal != null) {
+            String username = principal.getName();
+            User user = jdbcUserDao.getUserByUsername(username);
+            if (user != null) {
+                List<Integer> recipeIds = jdbcRecipeDao.getListOfUsersRecipes(user.getId());
+                List<Recipe> userRecipes = new ArrayList<>();
+                for (int recipeId : recipeIds) {
+                    Recipe recipe = recipeService.getRecipeById(recipeId);
+                    if (recipe != null) {
+                        userRecipes.add(recipe);
+                    }
+                }
+                return ResponseEntity.ok(userRecipes);
+            } else {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
+            }
+        } else {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "User not authenticated");
+        }
+    }
 
 }

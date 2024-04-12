@@ -13,7 +13,7 @@ import java.util.List;
 @Component
 public class RecipeService {
     private static final String API_BASE_URL = "https://api.spoonacular.com/recipes/";
-    private static final String API_KEY = "&apiKey=250b663cb5c4495fb447c0c6ab6f005e";
+    private static final String API_KEY = "&apiKey=f739f73488e14c5298d73ab26ddec367";
 
     private RestTemplate restTemplate = new RestTemplate();
 

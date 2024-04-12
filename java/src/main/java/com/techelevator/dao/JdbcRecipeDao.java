@@ -31,6 +31,19 @@ public class JdbcRecipeDao implements RecipeDao{
         String sqlToAddRecipeToUserList = "INSERT INTO user_recipes (user_id, recipe_id) VALUES (?, ?)";
         jdbcTemplate.update(sqlToAddRecipeToUserList, userId, recipeId);
     }
+
+    @Override
+    public List<Integer> getListOfUsersRecipes(int userId) {
+        List<Integer> listOfTheUsersRecipesIds = new ArrayList<>();
+        String sql = "select recipe_id from user_recipes where user_id = ?";
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, userId);
+        while (results.next()) {
+            int recipeId = results.getInt("recipe_id");
+            listOfTheUsersRecipesIds.add(recipeId);
+        }
+        return listOfTheUsersRecipesIds;
+    }
+
 }
 
 
