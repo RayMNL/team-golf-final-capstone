@@ -9,6 +9,7 @@
         <div v-if="selectedRecipe">
             <button class="button" @click="selectedRecipe = null" id="back-to-recipes-button">Back to Recipes</button>
             <button class="button" @click="addToLibrary(selectedRecipe.id)" id="add-to-recipe-library-button">Add to Recipe Library</button>
+            <p v-if="showMessage">{{ message }}</p>
             <div class="full-recipe">
                 <img :src="selectedRecipe.image" :alt="selectedRecipe.title" class="recipe-image">
                 <div class="recipe-details">
@@ -66,7 +67,9 @@ export default {
             selectedTags: [],
             allTags: [],
             selectedRecipe: null,
-            isRecipeSelected: false 
+            isRecipeSelected: false,
+            showMessage: false,
+            message: ""
         }
     },
     computed: {
@@ -118,6 +121,13 @@ export default {
                 .catch(error => {
                     console.error('Error adding recipe to library:', error);
                 });
+                this.message = "Added to Recipe Library";
+                this.showMessage = true;
+
+                
+                setTimeout(() => {
+              this.showMessage = false;
+            }, 3000);
         }
     }
 }
