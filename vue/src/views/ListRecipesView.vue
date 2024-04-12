@@ -7,8 +7,8 @@
                 :class="{ 'selected': isSelected(tag) }">{{ tag }}</span>
         </div>
         <div v-if="selectedRecipe">
-            <button @click="selectedRecipe = null" id="back-to-recipes-button">Back to Recipes</button>
-            <button @click="addToLibrary(selectedRecipe.id)" id="add-to-recipe-library-button">Add to Recipe Library</button>
+            <button class="button" @click="selectedRecipe = null" id="back-to-recipes-button">Back to Recipes</button>
+            <button class="button" @click="addToLibrary(selectedRecipe.id)" id="add-to-recipe-library-button">Add to Recipe Library</button>
             <div class="full-recipe">
                 <img :src="selectedRecipe.image" :alt="selectedRecipe.title" class="recipe-image">
                 <div class="recipe-details">
@@ -214,11 +214,41 @@ div.tags-container {
     margin-bottom: 25px;
 }
 
-.full-recipe .recipe-image {
-    height: 75%;
-    width: 75%;
-    object-fit: contain;
+.full-recipe {
+    max-width: 600px; 
+    margin: 0 auto;
+    padding: 20px;
+    border-radius: 5px;
+    background-color: #40E0D0; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
+
+/* Hover effect */
+.full-recipe:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); 
+}
+
+
+.full-recipe .recipe-title {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+
+.full-recipe .recipe-image {
+    width: 100%;
+    max-height: 200px; 
+    object-fit: cover;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+
+.full-recipe .recipe-details {
+    font-size: 16px;
+    line-height: 1.5;
+}
+
 
 #back-to-recipes-button {
     margin-bottom: 15px;
@@ -228,5 +258,25 @@ div.tags-container {
 div.recipe-details {
     height: 75%;
     width: 75%;
+}
+
+.button {
+  display: inline-block;
+  border-radius: 4px;
+  background-color: #f0f0f0; 
+  border: none;
+  color: #555555; 
+  text-align: center;
+  font-size: 14px; 
+  padding: 8px 12px; 
+  transition: all 0.3s;
+  cursor: pointer;
+  margin: 5px;
+  text-decoration: none;
+}
+
+
+.button:hover {
+  background-color: #dddddd; 
 }
 </style>
