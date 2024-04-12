@@ -25,13 +25,13 @@ public class RecipeController {
         this.jdbcRecipeDao = jdbcRecipeDao;
         this.recipeService = recipeService;
     }
-private RecipeService recipeService;
-private JdbcRecipeDao jdbcRecipeDao;
-private JdbcUserDao jdbcUserDao;
+
+    private RecipeService recipeService;
+    private JdbcRecipeDao jdbcRecipeDao;
+    private JdbcUserDao jdbcUserDao;
 
 
-
-    @RequestMapping(path="/recipes/{id}/add-to-list", method = RequestMethod.POST)
+    @RequestMapping(path = "/recipes/{id}/add-to-list", method = RequestMethod.POST)
     public ResponseEntity addRecipeToUsersList(@PathVariable("id") int recipeId, Principal principal) {
         if (principal != null) {
             String username = principal.getName();
@@ -48,20 +48,13 @@ private JdbcUserDao jdbcUserDao;
     }
 
     @RequestMapping(path = "/users/recipes", method = RequestMethod.GET)
-    public ResponseEntity<List<Recipe>> getUserRecipes(Principal principal) {
+    public ResponseEntity<List<Integer>> getUserRecipeIds(Principal principal) {
         if (principal != null) {
             String username = principal.getName();
             User user = jdbcUserDao.getUserByUsername(username);
             if (user != null) {
                 List<Integer> recipeIds = jdbcRecipeDao.getListOfUsersRecipes(user.getId());
-                List<Recipe> userRecipes = new ArrayList<>();
-                for (int recipeId : recipeIds) {
-                    Recipe recipe = recipeService.getRecipeById(recipeId);
-                    if (recipe != null) {
-                        userRecipes.add(recipe);
-                    }
-                }
-                return ResponseEntity.ok(userRecipes);
+                return ResponseEntity.ok(recipeIds);
             } else {
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
             }
@@ -69,5 +62,6 @@ private JdbcUserDao jdbcUserDao;
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "User not authenticated");
         }
     }
-
 }
+
+

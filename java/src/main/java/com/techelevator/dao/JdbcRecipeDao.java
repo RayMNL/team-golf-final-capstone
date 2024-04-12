@@ -15,9 +15,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class JdbcRecipeDao implements RecipeDao{
+public class JdbcRecipeDao implements RecipeDao {
 
     private final JdbcTemplate jdbcTemplate;
+
     public JdbcRecipeDao(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
