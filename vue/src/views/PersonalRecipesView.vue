@@ -1,56 +1,59 @@
 <template>
-  <div class="container">
-      <input type="text" v-model="searchQuery" placeholder="Search recipes..." class="search-bar" v-if="!selectedRecipe">
-      <div class="tags-container" v-if="!selectedRecipe">
-        <label for="filter">Filter:</label>
-          <span class="tag" v-for="tag in allTags" :key="tag" @click="toggleTag(tag)"
-              :class="{ 'selected': isSelected(tag) }">{{ tag }}</span>
-      </div>
-      <div v-if="selectedRecipe">
-          <button @click="selectedRecipe = null" id="back-to-recipes-button">Back to Recipes</button>
-          <div class="full-recipe">
-              <img :src="selectedRecipe.image" :alt="selectedRecipe.title" class="recipe-image">
-              <div class="recipe-details">
-                  <h2 class="recipe-title">{{ selectedRecipe.title }}</h2>
-                  <div class="recipe-tags">
-                      <span v-if="selectedRecipe.vegetarian" class="tag">Vegetarian</span>
-                      <span v-if="selectedRecipe.vegan" class="tag">Vegan</span>
-                      <span v-if="selectedRecipe.glutenFree" class="tag">Gluten Free</span>
-                      <span v-if="selectedRecipe.dairyFree" class="tag">Dairy Free</span>
-                  </div>
-                  <h3>Ingredients:</h3>
-                  <ul>
-                      <li v-for="ingredient in selectedRecipe.extendedIngredients" :key="ingredient.id">
-                          {{ ingredient.original }}
-                      </li>
-                  </ul>
-                  <h3>Instructions:</h3>
-                  <ol>
-                      <li v-for="(step, index) in selectedRecipe.analyzedInstructions[0].steps" :key="index">
-                          {{ step.step }}
-                      </li>
-                  </ol>
-              </div>
-          </div>
-      </div>
-      <div v-else>
-          <div class="recipe-container">
-              <div v-if="filteredRecipes.length > 0" v-for="recipe in filteredRecipes" :key="recipe.id"
-                  class="recipe-card" @click="showRecipe(recipe)">
-                  <img v-if="recipe.image" :src="recipe.image" :alt="recipe.title" class="recipe-image">
-                  <div class="recipe-details">
-                      <h2 class="recipe-title">{{ recipe.title }}</h2>
-                      <div class="recipe-tags">
-                          <span v-for="diet in recipe.diets" :key="diet" class="tag">{{ diet }}</span>
-                      </div>
-                  </div>
-              </div>
-              <div v-else>
-                  <p>No recipes with images found.</p>
-              </div>
-          </div>
-      </div>
-  </div>
+    <div class="container">
+        <input type="text" v-model="searchQuery" placeholder="Search recipes..." class="search-bar" v-if="!selectedRecipe">
+        <div class="tags-container" v-if="!selectedRecipe">
+            <label for="filter">Filter: </label>
+            <span class="tag" v-for="tag in allTags" :key="tag" @click="toggleTag(tag)"
+                :class="{ 'selected': isSelected(tag) }">{{ tag }}</span>
+        </div>
+        <div v-if="selectedRecipe">
+            <button class="button" @click="selectedRecipe = null" id="back-to-recipes-button">Back to Recipes</button>
+            <div id="success-message" v-if="showMessage" class="success-banner">
+        {{ message }}
+    </div>
+            <div class="full-recipe">
+                <img :src="selectedRecipe.image" :alt="selectedRecipe.title" class="recipe-image">
+                <div class="recipe-details">
+                    <h2 class="recipe-title">{{ selectedRecipe.title }}</h2>
+                    <div class="recipe-tags">
+                        <span v-if="selectedRecipe.vegetarian" class="tag">Vegetarian</span>
+                        <span v-if="selectedRecipe.vegan" class="tag">Vegan</span>
+                        <span v-if="selectedRecipe.glutenFree" class="tag">Gluten Free</span>
+                        <span v-if="selectedRecipe.dairyFree" class="tag">Dairy Free</span>
+                    </div>
+                    <h3>Ingredients:</h3>
+                    <ul>
+                        <li v-for="ingredient in selectedRecipe.extendedIngredients" :key="ingredient.id">
+                            {{ ingredient.original }}
+                        </li>
+                    </ul>
+                    <h3>Instructions:</h3>
+                    <ol>
+                        <li v-for="(step, index) in selectedRecipe.analyzedInstructions[0].steps" :key="index">
+                            {{ step.step }}
+                        </li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+        <div v-else>
+            <div class="recipe-container">
+                <div v-if="filteredRecipes.length > 0" v-for="recipe in filteredRecipes" :key="recipe.id"
+                    class="recipe-card" @click="showRecipe(recipe)">
+                    <img v-if="recipe.image" :src="recipe.image" :alt="recipe.title" class="recipe-image">
+                    <div class="recipe-details">
+                        <h2 class="recipe-title">{{ recipe.title }}</h2>
+                        <div class="recipe-tags">
+                            <span v-for="diet in recipe.diets" :key="diet" class="tag">{{ diet }}</span>
+                        </div>
+                    </div>
+                </div>
+                <div v-else>
+                    <p>No recipes with images found.</p>
+                </div>
+            </div>
+        </div>
+    </div>
 </template>
 
 <script>
@@ -65,7 +68,9 @@ export default {
           selectedTags: [],
           allTags: [],
           selectedRecipe: null,
-          isRecipeSelected: false 
+          isRecipeSelected: false,
+          recipeIdString: ''
+
       }
   },
   computed: {
@@ -78,15 +83,27 @@ export default {
       }
   },
   created() {
-      this.getDataFromSpoon();
+    this.getDataFromLocal();
+      
   },
   methods: {
-      getDataFromSpoon() {
-          SpoonService.getListOfRecipes().then(response => {
-              this.recipes = response.data.recipes;
-              this.getAllTags();
-          }).catch(err => console.error(err));
-      },
+    getDataFromLocal() {
+        LocalApiService.getLibrary() 
+        .then(response => {
+            const recipeIDs = response.data; 
+            const recipeIDsString = recipeIDs.join(',');
+            this.recipeIdString = recipeIDsString
+            console.log('This is the id string:', recipeIDsString)
+            this.getDataFromSpoon();
+        }).catch(err => console.error(err));
+    },
+    getDataFromSpoon() {
+            SpoonService.getListOfRecipes(this.recipeIdString).then(response => {
+                this.recipes = response.data;
+                this.getAllTags();
+            }).catch(err => console.error(err));
+        },
+
       toggleTag(tag) {
           if (this.isSelected(tag)) {
               this.selectedTags = this.selectedTags.filter(selectedTag => selectedTag !== tag);
