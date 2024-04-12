@@ -1,10 +1,11 @@
 import axios from "axios";
 
 const baseUrl = "https://api.spoonacular.com/recipes/";
-const apiKey= "&apiKey=250b663cb5c4495fb447c0c6ab6f005e";
+const apiKey= "&apiKey=e65503428a784c15b942e4c31508576f";
 
 
 const newAxiosInstance = axios.create();
+
 
 export default {
 
@@ -13,6 +14,7 @@ export default {
     },
 
     getListOfRecipes(recipeIds) {
+        console.log('In get list of recipes in spoon service: ', recipeIds)
         return newAxiosInstance.get(baseUrl + 'informationBulk?ids=' + recipeIds + apiKey)
     }
 }
