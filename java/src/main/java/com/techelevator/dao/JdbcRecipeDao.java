@@ -47,16 +47,31 @@ public class JdbcRecipeDao implements RecipeDao {
 
     @Override
     public Recipe addCustomRecipeToDatabaseAndUsersList(int userId, Recipe recipe) {
-        String sqlToAddCustomRecipeToDatabase = "INSERT INTO recipes (name, ingredients, instructions, image) VALUES (?, ?, ?, ?) returning recipe_id;";
+        String sqlToAddCustomRecipeToDatabase = "INSERT INTO custom_recipes (name, ingredients, instructions, image) VALUES (?, ?, ?, ?) returning custom_recipe_id;";
         int newRecipeId = jdbcTemplate.queryForObject(sqlToAddCustomRecipeToDatabase, int.class, recipe.getName(), recipe.getIngredients(), recipe.getInstructions(), recipe.getImg());
         recipe.setRecipeId(newRecipeId);
 
-        String sqlToAddRecipeToUserList = "INSERT INTO user_recipes (user_id, recipe_id) VALUES (?, ?)";
+        String sqlToAddRecipeToUserList = "INSERT INTO user_custom_recipes (user_id, custom_recipe_id) VALUES (?, ?)";
         jdbcTemplate.update(sqlToAddRecipeToUserList, userId, recipe.getRecipeId());
 
         return recipe;
     }
 
+
+    /**
+     *
+     * @Override
+     *     public Recipe addCustomRecipeToDatabaseAndUsersList(int userId, Recipe recipe) {
+     *         String sqlToAddCustomRecipeToDatabase = "INSERT INTO recipes (name, ingredients, instructions, image) VALUES (?, ?, ?, ?) returning recipe_id;";
+     *         int newRecipeId = jdbcTemplate.queryForObject(sqlToAddCustomRecipeToDatabase, int.class, recipe.getName(), recipe.getIngredients(), recipe.getInstructions(), recipe.getImg());
+     *         recipe.setRecipeId(newRecipeId);
+     *
+     *         String sqlToAddRecipeToUserList = "INSERT INTO user_recipes (user_id, recipe_id) VALUES (?, ?)";
+     *         jdbcTemplate.update(sqlToAddRecipeToUserList, userId, recipe.getRecipeId());
+     *
+     *         return recipe;
+     *     }
+     */
 }
 
 

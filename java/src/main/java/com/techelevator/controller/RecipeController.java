@@ -20,13 +20,11 @@ import java.util.List;
 @RestController
 public class RecipeController {
 
-    public RecipeController(JdbcUserDao jdbcUserDao, JdbcRecipeDao jdbcRecipeDao, RecipeService recipeService) {
+    public RecipeController(JdbcUserDao jdbcUserDao, JdbcRecipeDao jdbcRecipeDao) {
         this.jdbcUserDao = jdbcUserDao;
         this.jdbcRecipeDao = jdbcRecipeDao;
-        this.recipeService = recipeService;
     }
 
-    private RecipeService recipeService;
     private JdbcRecipeDao jdbcRecipeDao;
     private JdbcUserDao jdbcUserDao;
 
@@ -79,7 +77,30 @@ public class RecipeController {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "User not authenticated");
         }
     }
-    
+
+
+    /**
+     *
+     * @ResponseStatus(HttpStatus.CREATED)
+     *     @RequestMapping(path = "/users/add-custom-recipe", method = RequestMethod.POST)
+     *     public ResponseEntity<String> addCustomRecipeToUsersList(@RequestBody Recipe recipe, Principal principal) {
+     *         if (principal != null) {
+     *             String username = principal.getName();
+     *             User user = jdbcUserDao.getUserByUsername(username);
+     *             if (user != null) {
+     *                 jdbcRecipeDao.addCustomRecipeToDatabaseAndUsersList(user.getId(), recipe);
+     *                 return ResponseEntity.ok("Recipe added to the user's list");
+     *             } else {
+     *                 throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
+     *             }
+     *         } else {
+     *             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "User not authenticated");
+     *         }
+     *     }
+     *
+     *
+     *
+     */
 }
 
 
