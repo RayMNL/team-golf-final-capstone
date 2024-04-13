@@ -13,10 +13,12 @@ CREATE TABLE users (
 create table recipes (
 	recipe_id serial primary key,
 	name varchar(150),
-	image text,
+	ingredients text,
+	instructions text,
 	tags text,
-	instructions text
+	image text
 );
+
 create table ingredients (
 	ingredient_id serial primary key,
 	name varchar(50)
@@ -38,6 +40,5 @@ create table user_recipes (
 	constraint fk_user_recipes_recipes FOREIGN KEY (recipe_id) REFERENCES recipes(recipe_id)
 );
 
-ROLLBACK;
 
 COMMIT TRANSACTION;

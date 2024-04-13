@@ -7,27 +7,30 @@
                 <div class="card-body">
                     <div class="mb-3">
                         <label for="exampleFormControlInput1" class="form-label">Recipe Name</label>
-                        <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Recipe Name">
+                        <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Recipe Name" v-model.trim="newRecipe.name">
                     </div>
                     <div class="mb-3">
                         <label for="exampleFormControlTextarea1" class="form-label">Ingredients</label>
-                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" v-model="newRecipe.ingredients"></textarea>
                     </div>
                     <div class="mb-3">
                         <label for="exampleFormControlTextarea1" class="form-label">Instructions</label>
-                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" v-model="newRecipe.instructions"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleFormControlInput1" class="form-label">Recipe Image</label>
+                        <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Image Link..." v-model.trim="newRecipe.image">
                     </div>
                 </div>
-                <button type="button" class="btn btn-outline-primary" @click="saveRecipe = null" id="save-recipe">Save Recipe</button>
+                <button type="button" class="btn btn-outline-primary" @click="addNewRecipe()" id="save-recipe">Save Recipe</button>
             </div>
-            
         </div>
     </div>
 </template>
 <script>
 import SpoonService from '@/services/SpoonService'
 import LocalApiService from '../services/LocalApiService';
-
+import CustomService from '../services/CustomService';
 export default {
     data() {
         return {
@@ -38,7 +41,13 @@ export default {
             selectedRecipe: null,
             isRecipeSelected: false,
             showMessage: false,
-            message: ""
+            message: "",
+            newRecipe: {
+                name: '',
+                ingredients: '',
+                instructions: '',
+                image: ''
+              }
         }
     },
     computed: {
@@ -51,7 +60,6 @@ export default {
         }
     },
     created() {
-        
     },
     methods: {
         SendLocalData() {
@@ -60,27 +68,33 @@ export default {
                 this.getAllTags();
             }).catch(err => console.error(err));
         },
-        
-        
+
+        addNewRecipe() {
+            CustomService.addCustomRecipe(this.newRecipe)
+            .then(response => {
+            this.recipes.push(response.data.recipe);
+
+            // this would redirect to name : "custom". Temporary before having custom 
+            // recipe view with populated data
+             this.$router.push({ name: "custom" });
+            }).catch(err => console.error(err));
+            
+        }
     }
 }
 </script>
-  
 <style>
 .container {
     display: grid;
     place-items: center;
     height: 100vh;
 }
-
-
 .card-container {
     width: 100%;
     display: flex;
     justify-content: center;
 }
-
 .card {
-  max-width: 2000px;
+  max-width: 800px;
 }
 </style>

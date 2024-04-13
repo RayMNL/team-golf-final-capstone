@@ -9,12 +9,12 @@ public class Recipe {
 
     private int recipeId;
     private String name;
-    private List<ExtendedIngredient> ingredients;
-    private List<String> instructions;
+    private String ingredients;
+    private String instructions;
     private String img;
     private String dietTags;
 
-    public Recipe(int recipeId, String name, List<ExtendedIngredient> ingredients, List<String> instructions, String img, String dietTags) {
+    public Recipe(int recipeId, String name, String ingredients, String instructions, String img, String dietTags) {
         this.recipeId = recipeId;
         this.name = name;
         this.ingredients = ingredients;
@@ -23,11 +23,15 @@ public class Recipe {
         this.dietTags = dietTags;
     }
 
-    public Recipe() {
+    public Recipe(int recipeId, String name, String ingredients, String instructions, String img) {
+        this.recipeId = recipeId;
+        this.name = name;
+        this.ingredients = ingredients;
+        this.instructions = instructions;
+        this.img = img;
     }
 
-    public Recipe(List<ExtendedIngredient> ingredients) {
-        this.ingredients = ingredients;
+    public Recipe() {
     }
 
     public int getRecipeId() {
@@ -46,19 +50,19 @@ public class Recipe {
         this.name = name;
     }
 
-    public List<ExtendedIngredient> getIngredients() {
+    public String getIngredients() {
         return ingredients;
     }
 
-    public void setIngredients(List<ExtendedIngredient> ingredients) {
+    public void setIngredients(String ingredients) {
         this.ingredients = ingredients;
     }
 
-    public List<String> getInstructions() {
+    public String getInstructions() {
         return instructions;
     }
 
-    public void setInstructions(List<String> instructions) {
+    public void setInstructions(String instructions) {
         this.instructions = instructions;
     }
 
@@ -83,8 +87,8 @@ public class Recipe {
         return "Recipe{" +
                 "recipeId=" + recipeId +
                 ", name='" + name + '\'' +
-                ", ingredients=" + ingredients +
-                ", instructions=" + instructions +
+                ", ingredients='" + ingredients + '\'' +
+                ", instructions='" + instructions + '\'' +
                 ", img='" + img + '\'' +
                 ", dietTags='" + dietTags + '\'' +
                 '}';

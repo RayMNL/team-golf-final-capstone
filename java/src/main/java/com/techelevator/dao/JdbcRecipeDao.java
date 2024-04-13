@@ -29,7 +29,7 @@ public class JdbcRecipeDao implements RecipeDao {
         String sqlToAddRecipeToDatabase = "insert into recipes (recipe_id) values (?)";
         jdbcTemplate.update(sqlToAddRecipeToDatabase, recipeId);
 
-        String sqlToAddRecipeToUserList = "INSERT INTO user_recipes (user_id, recipe_id) VALUES (?, ?)";
+        String sqlToAddRecipeToUserList = "insert into user_recipes (user_id, recipe_id) values (?, ?)";
         jdbcTemplate.update(sqlToAddRecipeToUserList, userId, recipeId);
     }
 
@@ -43,6 +43,18 @@ public class JdbcRecipeDao implements RecipeDao {
             listOfTheUsersRecipesIds.add(recipeId);
         }
         return listOfTheUsersRecipesIds;
+    }
+
+    @Override
+    public Recipe addCustomRecipeToDatabaseAndUsersList(int userId, Recipe recipe) {
+        String sqlToAddCustomRecipeToDatabase = "INSERT INTO recipes (name, ingredients, instructions, image) VALUES (?, ?, ?, ?) returning recipe_id;";
+        int newRecipeId = jdbcTemplate.queryForObject(sqlToAddCustomRecipeToDatabase, int.class, recipe.getName(), recipe.getIngredients(), recipe.getInstructions(), recipe.getImg());
+        recipe.setRecipeId(newRecipeId);
+
+        String sqlToAddRecipeToUserList = "INSERT INTO user_recipes (user_id, recipe_id) VALUES (?, ?)";
+        jdbcTemplate.update(sqlToAddRecipeToUserList, userId, recipe.getRecipeId());
+
+        return recipe;
     }
 
 }
