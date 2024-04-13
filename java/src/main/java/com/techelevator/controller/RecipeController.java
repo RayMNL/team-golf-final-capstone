@@ -63,13 +63,14 @@ public class RecipeController {
         }
     }
 
+    @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(path = "/users/add-custom-recipe", method = RequestMethod.POST)
-    public ResponseEntity addCustomRecipeToUsersList(Principal principal) {
+    public ResponseEntity<String> addCustomRecipeToUsersList(@RequestBody Recipe recipe, Principal principal) {
         if (principal != null) {
             String username = principal.getName();
             User user = jdbcUserDao.getUserByUsername(username);
             if (user != null) {
-                jdbcRecipeDao.addCustomRecipeToDatabaseAndUsersList(user.getId(), R);
+                jdbcRecipeDao.addCustomRecipeToDatabaseAndUsersList(user.getId(), recipe);
                 return ResponseEntity.ok("Recipe added to the user's list");
             } else {
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
@@ -79,6 +80,25 @@ public class RecipeController {
         }
     }
 
+    /**
+     *
+     * @ResponseStatus(HttpStatus.CREATED)
+     *     @RequestMapping(path = "/users/add-custom-recipe", method = RequestMethod.POST)
+     *     public Recipe addCustomRecipeToUsersList(@RequestBody Recipe recipe, Principal principal) {
+     *         if (principal != null) {
+     *             String username = principal.getName();
+     *             User user = jdbcUserDao.getUserByUsername(username);
+     *             if (user != null) {
+     *                 jdbcRecipeDao.addCustomRecipeToDatabaseAndUsersList(user.getId(),Recipe recipe);
+     *                 return ResponseEntity.ok("Recipe added to the user's list");
+     *             } else {
+     *                 throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
+     *             }
+     *         } else {
+     *             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "User not authenticated");
+     *         }
+     *     }
+     */
 }
 
 
