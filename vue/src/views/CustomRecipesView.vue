@@ -22,7 +22,7 @@
                         <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Image Link..." v-model.trim="newRecipe.image">
                     </div>
                 </div>
-                <button type="button" class="btn btn-outline-primary" @click="saveRecipe = null" id="save-recipe">Save Recipe</button>
+                <button type="button" class="btn btn-outline-primary" @click="addNewRecipe()" id="save-recipe">Save Recipe</button>
             </div>
         </div>
     </div>
@@ -42,7 +42,12 @@ export default {
             isRecipeSelected: false,
             showMessage: false,
             message: "",
-            newRecipe: {}
+            newRecipe: {
+                name: '',
+                ingredients: '',
+                instructions: '',
+                image: ''
+              }
         }
     },
     computed: {
@@ -65,16 +70,13 @@ export default {
         },
 
         addNewRecipe() {
-            this.newRecipe.name = [ this.newRecipe.name] ;
-            this.newRecipe.ingredients = [ this.newRecipe.ingredients ];
-            this.newRecipe.instructions = [ this.newRecipe.instructions ];
-            this.newRecipe.image = [ this.newRecipe.image ];
+            CustomService.addCustomRecipe(this.newRecipe)
+            .then(response => {
+            this.recipes.push(response.data.recipe);
 
-            CustomService.addCustomRecipe(this.newRecipe).then( response =>  {
-                
-                // this would redirect to name : "custom". Temporary before having custom 
-                // recipe view with populated data
-                this.$router.push({ name: "custom" });
+            // this would redirect to name : "custom". Temporary before having custom 
+            // recipe view with populated data
+             this.$router.push({ name: "custom" });
             }).catch(err => console.error(err));
             
         }

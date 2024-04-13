@@ -4,7 +4,7 @@ import axios from "axios";
 
 
 export default {
-    addCustomRecipe() {
-        return axios.post(`/recipes/${recipeId}/`);
+    addCustomRecipe(newRecipe) {
+        return axios.post(`/users/add-custom-recipe/`,newRecipe);
     },
 };
