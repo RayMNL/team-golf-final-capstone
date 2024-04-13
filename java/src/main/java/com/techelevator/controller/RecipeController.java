@@ -62,6 +62,23 @@ public class RecipeController {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "User not authenticated");
         }
     }
+
+    @RequestMapping(path = "/users/add-custom-recipe", method = RequestMethod.POST)
+    public ResponseEntity addCustomRecipeToUsersList(Principal principal) {
+        if (principal != null) {
+            String username = principal.getName();
+            User user = jdbcUserDao.getUserByUsername(username);
+            if (user != null) {
+                jdbcRecipeDao.addCustomRecipeToDatabaseAndUsersList(user.getId(), R);
+                return ResponseEntity.ok("Recipe added to the user's list");
+            } else {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
+            }
+        } else {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "User not authenticated");
+        }
+    }
+
 }
 
 
