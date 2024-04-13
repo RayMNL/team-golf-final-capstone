@@ -57,8 +57,9 @@
 </template>
 
 <script>
-import SpoonService from '@/services/SpoonService'
+import SpoonService from '@/services/SpoonService';
 import LocalApiService from '../services/LocalApiService';
+import CustomService from '../services/CustomService';
 
 export default {
   data() {
@@ -69,7 +70,13 @@ export default {
           allTags: [],
           selectedRecipe: null,
           isRecipeSelected: false,
-          recipeIdString: ''
+          recipeIdString: '',
+          newRecipe: {
+                name: '',
+                ingredients: '',
+                instructions: '',
+                image: ''
+              },
 
       }
   },
@@ -87,6 +94,15 @@ export default {
       
   },
   methods: {
+
+    getCustomData() {
+        CustomService.getCustomRecipe()
+        .then(response => {
+            this.newRecipe = response.data.newRecipe;
+             }).catch(err => console.error(err));
+        }
+
+    },
     getDataFromLocal() {
         LocalApiService.getLibrary() 
         .then(response => {
@@ -101,6 +117,7 @@ export default {
             SpoonService.getListOfRecipes(this.recipeIdString).then(response => {
                 this.recipes = response.data;
                 this.getAllTags();
+                this.getCustomData(); 
             }).catch(err => console.error(err));
         },
 
@@ -126,7 +143,7 @@ export default {
           this.isRecipeSelected = true; 
       }
   }
-}
+
 </script>
 
 
