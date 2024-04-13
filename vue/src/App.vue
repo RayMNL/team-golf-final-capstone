@@ -4,6 +4,7 @@
       <router-link v-bind:to="{ name: 'home' }">Home</router-link>
       <router-link v-bind:to="{ name: 'spoon' }">Recipes</router-link>
       <router-link v-bind:to="{ name: 'personal' }" v-if="$store.state.token != ''">My Recipes</router-link>
+      <router-link v-bind:to="{ name: 'custom' }">Custom Recipes</router-link>
       <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''" class="logout-link">Logout</router-link>
     </nav>
     <router-view />
