@@ -7,7 +7,7 @@
                 :class="{ 'selected': isSelected(tag) }">{{ tag }}</span>
         </div>
         <div v-if="selectedRecipe">
-            <button class="button" @click="selectedRecipe = null" id="back-to-recipes-button">Back to Recipes</button>
+            <button type="button" class="btn btn-outline-primary" @click="selectedRecipe = null" id="back-to-recipes-button">Back to Recipes</button>
             <button class="button" @click="addToLibrary(selectedRecipe.id)" id="add-to-recipe-library-button">Add to Recipe Library</button>
             <div id="success-message" v-if="showMessage" class="success-banner">
         {{ message }}
