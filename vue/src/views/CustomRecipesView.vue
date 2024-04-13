@@ -62,25 +62,48 @@ export default {
     created() {
     },
     methods: {
-        SendLocalData() {
-            LocalApiService.addCustomRecipe().then(response => {
-                this.recipes = response.data.recipes;
-                this.getAllTags();
-            }).catch(err => console.error(err));
-        },
+        // SendLocalData() {
+        //     LocalApiService.addCustomRecipe().then(response => {
+        //         this.recipes = response.data.recipes;
+        //         this.getAllTags();
+        //     }).catch(err => console.error(err));
+        // }, 
+
+        // addNewRecipe() {
+        //     CustomService.addCustomRecipe(this.newRecipe)
+        //     .then(response => {
+        //     this.recipes.push(response.data);
+
+        //    // this would redirect to name : "custom". Temporary before having custom 
+        //    // recipe view with populated data
+        //      this.$router.push({ name: "personal" });
+        //     }).catch(err => console.error(err));
+            
+        // }
+        // addNewRecipe() {
+        //     this.newRecipe.name = [ this.newRecipe.name] ;
+        //     this.newRecipe.ingredients = [ this.newRecipe.ingredients ];
+        //     this.newRecipe.instructions = [ this.newRecipe.instructions ];
+        //     this.newRecipe.image = [ this.newRecipe.image ];
+
+        //     CustomService.addCustomRecipe(this.newRecipe).then( response =>  {
+                
+        //         // this would redirect to name : "custom". Temporary before having custom 
+        //         // recipe view with populated data
+        //         this.$router.push({ name: "personal" });
+        //     }).catch(err => console.error(err));
 
         addNewRecipe() {
-            CustomService.addCustomRecipe(this.newRecipe)
-            .then(response => {
-            this.recipes.push(response.data.recipe);
-
-            // this would redirect to name : "custom". Temporary before having custom 
-            // recipe view with populated data
-             this.$router.push({ name: "custom" });
-            }).catch(err => console.error(err));
-            
-        }
+        CustomService.addCustomRecipe(this.newRecipe)
+        .then(response => {
+         // Redirect to a specific route
+        this.$router.push({ name: "personal" });
+         })
+        .catch(err => console.error(err));
     }
+         
+ }
+    
 }
 </script>
 <style>
