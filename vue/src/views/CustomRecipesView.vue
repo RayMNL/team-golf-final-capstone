@@ -76,7 +76,7 @@ export default {
 
             // this would redirect to name : "custom". Temporary before having custom 
             // recipe view with populated data
-             this.$router.push({ name: "custom" });
+             this.$router.push({ name: "personal" });
             }).catch(err => console.error(err));
             
         }
