@@ -13,4 +13,6 @@ public interface RecipeDao {
     List<Integer> getListOfUsersRecipes(int userId);
 
     Recipe addCustomRecipeToDatabaseAndUsersList(int userId, Recipe recipe);
+
+    List<Recipe> getListOfUsersCustomRecipes(int userId);
 }

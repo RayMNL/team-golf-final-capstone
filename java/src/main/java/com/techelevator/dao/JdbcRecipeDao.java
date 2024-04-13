@@ -57,21 +57,28 @@ public class JdbcRecipeDao implements RecipeDao {
         return recipe;
     }
 
+    @Override
+    public List<Recipe> getListOfUsersCustomRecipes(int userId) {
+        List<Recipe> listOfTheUsersCustomRecipes = new ArrayList<>();
+        String sql = "SELECT cr.custom_recipe_id, cr.name, cr.ingredients, cr.instructions, cr.image FROM custom_recipes cr JOIN user_custom_recipes ucr ON cr.custom_recipe_id = ucr.custom_recipe_id WHERE ucr.user_id = ?";
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, userId);
 
-    /**
-     *
-     * @Override
-     *     public Recipe addCustomRecipeToDatabaseAndUsersList(int userId, Recipe recipe) {
-     *         String sqlToAddCustomRecipeToDatabase = "INSERT INTO recipes (name, ingredients, instructions, image) VALUES (?, ?, ?, ?) returning recipe_id;";
-     *         int newRecipeId = jdbcTemplate.queryForObject(sqlToAddCustomRecipeToDatabase, int.class, recipe.getName(), recipe.getIngredients(), recipe.getInstructions(), recipe.getImg());
-     *         recipe.setRecipeId(newRecipeId);
-     *
-     *         String sqlToAddRecipeToUserList = "INSERT INTO user_recipes (user_id, recipe_id) VALUES (?, ?)";
-     *         jdbcTemplate.update(sqlToAddRecipeToUserList, userId, recipe.getRecipeId());
-     *
-     *         return recipe;
-     *     }
-     */
+        while (results.next()) {
+            listOfTheUsersCustomRecipes.add(mapRowToRecipe(results));
+        }
+
+        return listOfTheUsersCustomRecipes;
+    }
+
+    private Recipe mapRowToRecipe(SqlRowSet rs) {
+        Recipe recipe = new Recipe();
+        recipe.setRecipeId(rs.getInt("custom_recipe_id"));
+        recipe.setName(rs.getString("name"));
+        recipe.setIngredients(rs.getString("ingredients"));
+        recipe.setInstructions(rs.getString("instructions"));
+        recipe.setImg(rs.getString("image"));
+        return recipe;
+    }
 }
 
 

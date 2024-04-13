@@ -78,29 +78,22 @@ public class RecipeController {
         }
     }
 
+    @RequestMapping(path = "/users/list-of-custom-recipes", method = RequestMethod.GET)
+    public ResponseEntity<List<Recipe>> getUserCustomRecipes(Principal principal) {
+        if (principal != null) {
+            String username = principal.getName();
+            User user = jdbcUserDao.getUserByUsername(username);
+            if (user != null) {
+                List<Recipe> recipes = jdbcRecipeDao.getListOfUsersCustomRecipes(user.getId());
+                return ResponseEntity.ok(recipes);
+            } else {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
+            }
+        } else {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "User not authenticated");
+        }
+    }
 
-    /**
-     *
-     * @ResponseStatus(HttpStatus.CREATED)
-     *     @RequestMapping(path = "/users/add-custom-recipe", method = RequestMethod.POST)
-     *     public ResponseEntity<String> addCustomRecipeToUsersList(@RequestBody Recipe recipe, Principal principal) {
-     *         if (principal != null) {
-     *             String username = principal.getName();
-     *             User user = jdbcUserDao.getUserByUsername(username);
-     *             if (user != null) {
-     *                 jdbcRecipeDao.addCustomRecipeToDatabaseAndUsersList(user.getId(), recipe);
-     *                 return ResponseEntity.ok("Recipe added to the user's list");
-     *             } else {
-     *                 throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
-     *             }
-     *         } else {
-     *             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "User not authenticated");
-     *         }
-     *     }
-     *
-     *
-     *
-     */
 }
 
 
