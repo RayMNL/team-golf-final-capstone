@@ -47,38 +47,15 @@ public class JdbcRecipeDao implements RecipeDao {
 
     @Override
     public Recipe addCustomRecipeToDatabaseAndUsersList(int userId, Recipe recipe) {
-        String sqlToAddCustomRecipeToDatabase = "INSERT INTO recipes (name, ingredients, instructions, image) VALUES (?, ?, ?, ?)";
-        jdbcTemplate.update(sqlToAddCustomRecipeToDatabase, recipe.getName(), recipe.getIngredients(), recipe.getInstructions(), recipe.getImg());
+        String sqlToAddCustomRecipeToDatabase = "INSERT INTO recipes (name, ingredients, instructions, image) VALUES (?, ?, ?, ?) returning recipe_id;";
+        int newRecipeId = jdbcTemplate.queryForObject(sqlToAddCustomRecipeToDatabase, int.class, recipe.getName(), recipe.getIngredients(), recipe.getInstructions(), recipe.getImg());
+        recipe.setRecipeId(newRecipeId);
 
-        String sqlToAddRecipeToUserList = "INSERT INTO user_recipes (user_id, recipe_id) VALUES (?, LAST_INSERT_ID())";
-        jdbcTemplate.update(sqlToAddRecipeToUserList, userId);
+        String sqlToAddRecipeToUserList = "INSERT INTO user_recipes (user_id, recipe_id) VALUES (?, ?)";
+        jdbcTemplate.update(sqlToAddRecipeToUserList, userId, recipe.getRecipeId());
 
         return recipe;
     }
-
-    /**
-     * public void addCustomRecipeToDatabaseAndUsersList(int userId, int recipeId, String recipeName, String ingredients, String instructions, String imageUrl) {
-     *         String sqlToAddCustomRecipeToDatabase = "insert into recipes (recipe_id, name, ingredients, instructions, image) values (?, ?, ?, ?, ?)";
-     *         jdbcTemplate.update(sqlToAddCustomRecipeToDatabase, recipeId, recipeName, ingredients, instructions, imageUrl);
-     *
-     *         String sqlToAddCustomRecipeToUserList = "insert into user_recipes (user_id, recipe_id) values (?, ?)";
-     *         jdbcTemplate.update(sqlToAddCustomRecipeToUserList, userId, recipeId);
-     *
-     *
-     *         @Override
-     *     public Recipe addCustomRecipeToDatabaseAndUsersList(Recipe recipe) {
-     *         String sqlToAddCustomRecipeToDatabase = "insert into recipes (recipe_id, name, ingredients, instructions, image) values (?, ?, ?, ?, ?)";
-     *         SqlRowSet rows = jdbcTemplate.queryForRowSet(sqlToAddCustomRecipeToDatabase, recipe.getRecipeId(), recipe.getIngredients(), recipe.getInstructions(), recipe.getImg());
-     *         if (rows.next()) {
-     *             recipe.setRecipeId(rows.getInt("recipe_id"));
-     *             recipe.setName(rows.getString("name"));
-     *             recipe.setIngredients(rows.getString("ingredients"));
-     *             recipe.setInstructions(rows.getString("instructions"));
-     *             recipe.setImg(rows.getString("image"));
-     *         }
-     *         return recipe;
-     *     }
-     */
 
 }
 
