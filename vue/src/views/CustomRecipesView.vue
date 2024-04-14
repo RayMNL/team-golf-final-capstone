@@ -11,15 +11,15 @@
                     </div>
                     <div class="mb-3">
                         <label for="exampleFormControlTextarea1" class="form-label">Ingredients</label>
-                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" v-model="newRecipe.ingredients"></textarea>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" v-model="newRecipe.ingredients" placeholder="Add a comma after each ingredient..."></textarea>
                     </div>
                     <div class="mb-3">
                         <label for="exampleFormControlTextarea1" class="form-label">Instructions</label>
-                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" v-model="newRecipe.instructions"></textarea>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" v-model="newRecipe.instructions" placeholder="Add a period after each sentence..."></textarea>
                     </div>
                     <div class="mb-3">
                         <label for="exampleFormControlInput1" class="form-label">Recipe Image</label>
-                        <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Image Link..." v-model.trim="newRecipe.image">
+                        <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Image Link..." v-model.trim="newRecipe.img">
                     </div>
                 </div>
                 <button type="button" class="btn btn-outline-primary" @click="addNewRecipe()" id="save-recipe">Save Recipe</button>
@@ -46,7 +46,7 @@ export default {
                 name: '',
                 ingredients: '',
                 instructions: '',
-                image: ''
+                img: ''
               }
         }
     },
