@@ -1,68 +1,33 @@
 <template>
     <div class="container">
-      <input type="text" v-model="searchQuery" placeholder="Search recipes..." class="search-bar" v-if="!selectedRecipe">
-      <div class="tags-container" v-if="!selectedRecipe">
-        <label for="filter">Filter: </label>
-        <span class="tag" v-for="tag in allTags" :key="tag" @click="toggleTag(tag)" :class="{ 'selected': isSelected(tag) }">{{ tag }}</span>
-      </div>
-      <div v-if="newRecipe && newRecipe.length > 0" class="new-recipes">
-        <div v-for="recipe in newRecipe" :key="recipe.recipeId" class="card">
-          <div class="card-body" @click="toggleRecipeDetails(recipe)">
-            <img :src="recipe.img" alt="Plate Logo" class="plate-logo">
-            <h3>Name: {{ recipe.name }}</h3>
-            <div v-if="recipe.showDetails">
-              <h3>Recipe ID: {{ recipe.recipeId }}</h3>
-              <h3>Ingredients:</h3>
-              <ul>
-                <li v-for="(ingredient, index) in recipe.ingredients.split(',')" :key="index">{{ ingredient }}</li>
-              </ul>
-              <h3>Instructions:</h3>
-              <ol>
-                <li v-for="(instruction, index) in recipe.instructions.split('.')" :key="index">{{ instruction }}</li>
-              </ol>
-            </div>
-          </div>
+        <input type="text" v-model="searchQuery" placeholder="Search recipes..." class="search-bar" v-if="!selectedRecipe">
+        <div class="tags-container" v-if="!selectedRecipe">
+            <label for="filter">Filter: </label>
+            <span class="tag" v-for="tag in allTags" :key="tag" @click="toggleTag(tag)"
+                :class="{ 'selected': isSelected(tag) }">{{ tag }}</span>
         </div>
-<<<<<<< HEAD
-      </div>
-      <div v-if="selectedRecipe">
-        <button class="button" @click="selectedRecipe = null" id="back-to-recipes-button">Back to Recipes</button>
-        <div id="success-message" v-if="showMessage" class="success-banner">
-          {{ message }}
-        </div>
-        <div class="full-recipe">
-          <img :src="selectedRecipe.image" :alt="selectedRecipe.title" class="recipe-image">
-          <div class="recipe-details">
-            <h2 class="recipe-title">{{ selectedRecipe.title }}</h2>
-            <div class="recipe-tags">
-              <span v-if="selectedRecipe.vegetarian" class="tag">Vegetarian</span>
-              <span v-if="selectedRecipe.vegan" class="tag">Vegan</span>
-              <span v-if="selectedRecipe.glutenFree" class="tag">Gluten Free</span>
-              <span v-if="selectedRecipe.dairyFree" class="tag">Dairy Free</span>
-=======
-
         <div v-if="newRecipe && newRecipe.length > 0" class="new-recipes">
-    <div v-for="recipe in newRecipe" :key="recipe.recipeId" class="card">
-        <div class="full-recipe" @click="recipe.showDetails = !recipe.showDetails">
-            <img :src="recipe.img" alt="No Recipe" class="recipe-image">
-            <h3>Name: {{ recipe.name }}</h3>
-            <div v-if="recipe.showDetails">
-                <h3>Recipe ID: {{ recipe.recipeId }}</h3>
-                <h3>Ingredients:</h3>
-                <ul>
-                    <li v-for="(ingredient, index) in recipe.ingredients.split(',')" :key="index">{{ ingredient }}</li>
-                </ul>
-                <h3>Instructions:</h3>
-                <ol>
-                    <li v-for="(instruction, index) in recipe.instructions.split('.')" :key="index">{{ instruction }}</li>
-                </ol>
+            <div class="recipe-container">
+                <div v-for="recipe in newRecipe" :key="recipe.recipeId" class="recipe-card">
+                    <div class="full-recipe" @click="recipe.showDetails = !recipe.showDetails">
+                        <img :src="recipe.img" alt="No Recipe" class="recipe-image">
+                        <div class="recipe-details">
+                            <h2 class="recipe-title"> {{ recipe.name }}</h2>
+                            <div v-if="recipe.showDetails">
+                                <h3>Ingredients:</h3>
+                                <ul>
+                                    <li v-for="(ingredient, index) in recipe.ingredients.split(',')" :key="index">{{ ingredient }}</li>
+                                </ul>
+                                <h3>Instructions:</h3>
+                                <ol>
+                                    <li v-for="(instruction, index) in recipe.instructions.split('.')" :key="index">{{ instruction }}</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-</div>
-
-
-
         <div v-if="selectedRecipe">
             <button class="button" @click="selectedRecipe = null" id="back-to-recipes-button">Back to Recipes</button>
             <div id="success-message" v-if="showMessage" class="success-banner">
@@ -91,128 +56,26 @@
                         </li>
                     </ol>
                 </div>
->>>>>>> 38cea3cd726ab18d3796684f0daf618cb9e6d754
             </div>
-            <h3>Ingredients:</h3>
-            <ul>
-              <li v-for="ingredient in selectedRecipe.extendedIngredients" :key="ingredient.id">
-                {{ ingredient.original }}
-              </li>
-            </ul>
-            <h3>Instructions:</h3>
-            <ol>
-              <li v-for="(step, index) in selectedRecipe.analyzedInstructions[0].steps" :key="index">
-                {{ step.step }}
-              </li>
-            </ol>
-          </div>
         </div>
-      </div>
-      <div v-else>
-        <div class="recipe-container">
-          <div v-if="filteredRecipes.length > 0" v-for="recipe in filteredRecipes" :key="recipe.id" class="recipe-card" @click="showRecipe(recipe)">
-            <img v-if="recipe.image" :src="recipe.image" :alt="recipe.title" class="recipe-image">
-            <div class="recipe-details">
-              <h2 class="recipe-title">{{ recipe.title }}</h2>
-              <div class="recipe-tags">
-                <span v-for="diet in recipe.diets" :key="diet" class="tag">{{ diet }}</span>
-              </div>
+        <div v-else>
+            <div class="recipe-container">
+                <div v-if="filteredRecipes.length > 0" v-for="recipe in filteredRecipes" :key="recipe.id"
+                    class="recipe-card" @click="showRecipe(recipe)">
+                    <img v-if="recipe.image" :src="recipe.image" :alt="recipe.title" class="recipe-image">
+                    <div class="recipe-details">
+                        <h2 class="recipe-title">{{ recipe.title }}</h2>
+                        <div class="recipe-tags">
+                            <span v-for="diet in recipe.diets" :key="diet" class="tag">{{ diet }}</span>
+                        </div>
+                    </div>
+                </div>
+                <div v-else>
+                    <p>No recipes with images found.</p>
+                </div>
             </div>
-          </div>
-          <div v-else>
-            <p>No recipes with images found.</p>
-          </div>
         </div>
-      </div>
     </div>
-<<<<<<< HEAD
-  </template>
-  
-  <script>
-  import SpoonService from '@/services/SpoonService';
-  import LocalApiService from '../services/LocalApiService';
-  import CustomService from '../services/CustomService';
-  
-  export default {
-    data() {
-      return {
-        recipes: [],
-        searchQuery: '',
-        selectedTags: [],
-        allTags: [],
-        selectedRecipe: null,
-        isRecipeSelected: false,
-        recipeIdString: '',
-        newRecipe: [],
-      }
-    },
-    computed: {
-      filteredRecipes() {
-        return this.recipes.filter(recipe => {
-          const titleMatches = recipe.title.toLowerCase().includes(this.searchQuery.toLowerCase());
-          const allTagsMatch = this.selectedTags.every(tag => recipe.diets.includes(tag));
-          return titleMatches && allTagsMatch;
-        });
-      }
-    },
-    created() {
-      this.getDataFromLocal();
-    },
-    methods: {
-      getCustomData() {
-        CustomService.getCustomRecipe()
-          .then(response => {
-            this.newRecipe = response.data;
-            console.log('This is the newRecipe object: ', this.newRecipe);
-          }).catch(err => console.error(err));
-      },
-      getDataFromLocal() {
-        LocalApiService.getLibrary()
-          .then(response => {
-            const recipeIDs = response.data;
-            const recipeIDsString = recipeIDs.join(',');
-            this.recipeIdString = recipeIDsString;
-            console.log('This is the id string:', recipeIDsString);
-            this.getDataFromSpoon();
-          }).catch(err => console.error(err));
-      },
-      getDataFromSpoon() {
-        SpoonService.getListOfRecipes(this.recipeIdString)
-          .then(response => {
-            this.recipes = response.data;
-            this.getAllTags();
-            this.getCustomData();
-          }).catch(err => console.error(err));
-      },
-      toggleTag(tag) {
-        if (this.isSelected(tag)) {
-          this.selectedTags = this.selectedTags.filter(selectedTag => selectedTag !== tag);
-        } else {
-          this.selectedTags.push(tag);
-        }
-      },
-      isSelected(tag) {
-        return this.selectedTags.includes(tag);
-      },
-      getAllTags() {
-        const tagsSet = new Set();
-        this.recipes.forEach(recipe => {
-          recipe.diets.forEach(diet => tagsSet.add(diet));
-        });
-        this.allTags = Array.from(tagsSet);
-      },
-      toggleRecipeDetails(recipe) {
-        // Toggle the showDetails property to display/hide details
-        recipe.showDetails = !recipe.showDetails;
-      },
-      showRecipe(recipe) {
-        this.selectedRecipe = recipe;
-        this.isRecipeSelected = true;
-      }
-    }
-  }
-  </script>
-=======
 </template>
 
 <script>
@@ -230,15 +93,8 @@ export default {
             selectedRecipe: null,
             isRecipeSelected: false,
             recipeIdString: '',
-            newRecipe: {
-                recipeId: '',
-                name: '',
-                ingredients: '',
-                instructions: '',
-                img: ''
-            },
-
-        }
+            newRecipe: []
+        };
     },
     computed: {
         filteredRecipes() {
@@ -251,29 +107,20 @@ export default {
     },
     created() {
         this.getDataFromLocal();
-
     },
     methods: {
-
         getCustomData() {
             CustomService.getCustomRecipe()
                 .then(response => {
                     this.newRecipe = response.data;
-
-
-
-                    console.log('This is the newRecipe object: ', this.newRecipe);
                 }).catch(err => console.error(err));
         },
-
-
         getDataFromLocal() {
             LocalApiService.getLibrary()
                 .then(response => {
                     const recipeIDs = response.data;
                     const recipeIDsString = recipeIDs.join(',');
-                    this.recipeIdString = recipeIDsString
-                    console.log('This is the id string:', recipeIDsString)
+                    this.recipeIdString = recipeIDsString;
                     this.getDataFromSpoon();
                 }).catch(err => console.error(err));
         },
@@ -284,7 +131,6 @@ export default {
                 this.getCustomData();
             }).catch(err => console.error(err));
         },
-
         toggleTag(tag) {
             if (this.isSelected(tag)) {
                 this.selectedTags = this.selectedTags.filter(selectedTag => selectedTag !== tag);
@@ -307,13 +153,9 @@ export default {
             this.isRecipeSelected = true;
         }
     }
-}
-
+};
 </script>
 
-
-
->>>>>>> 38cea3cd726ab18d3796684f0daf618cb9e6d754
 <style scoped>
 .container {
     max-width: 1200px;
@@ -364,19 +206,11 @@ export default {
     cursor: pointer;
 }
 .tag.selected {
-<<<<<<< HEAD
     background-color: #007BFF;
-=======
-    background-color: #007bff;
->>>>>>> 38cea3cd726ab18d3796684f0daf618cb9e6d754
     color: #fff;
 }
 .last-row-card {
     width: 100%;
-<<<<<<< HEAD
-=======
-
->>>>>>> 38cea3cd726ab18d3796684f0daf618cb9e6d754
 }
 .search-bar {
     width: 97%;
@@ -435,11 +269,7 @@ div.recipe-details {
 .button {
     display: inline-block;
     border-radius: 4px;
-<<<<<<< HEAD
     background-color: #F0F0F0;
-=======
-    background-color: #f0f0f0;
->>>>>>> 38cea3cd726ab18d3796684f0daf618cb9e6d754
     border: none;
     color: #555555;
     text-align: center;
@@ -451,65 +281,35 @@ div.recipe-details {
     text-decoration: none;
 }
 .button:hover {
-<<<<<<< HEAD
     background-color: #DDDDDD;
 }
-=======
-    background-color: #dddddd;
-}
-
-
->>>>>>> 38cea3cd726ab18d3796684f0daf618cb9e6d754
 /* Start of newRecipe format */
-.new-recipes {
+/* .new-recipes {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
 }
-<<<<<<< HEAD
 .card {
     flex: 1 0 300px;
-    /* Adjust the width as needed */
-=======
-
-.card {
-    flex: 1 0 300px;
->>>>>>> 38cea3cd726ab18d3796684f0daf618cb9e6d754
     border: 1px solid #ccc;
     border-radius: 4px;
     padding: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
-<<<<<<< HEAD
 .card-body {
     padding: 10px;
 }
 .card h3 {
     margin-bottom: 5px;
 }
-=======
-
-.card-body {
-    padding: 10px;
-}
-
-.card h3 {
-    margin-bottom: 5px;
-}
-
->>>>>>> 38cea3cd726ab18d3796684f0daf618cb9e6d754
 .card ul {
     margin-top: 0;
     margin-bottom: 10px;
     padding-left: 20px;
 }
-<<<<<<< HEAD
-=======
-
->>>>>>> 38cea3cd726ab18d3796684f0daf618cb9e6d754
 .card ol {
     margin-top: 0;
     margin-bottom: 10px;
     padding-left: 20px;
-}
+} */
 </style>

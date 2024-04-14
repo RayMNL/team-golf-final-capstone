@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const baseUrl = "https://api.spoonacular.com/recipes/";
-const apiKey= "&apiKey=cd2c9521530b4c31bd45126b77f2cdcf";
+const apiKey= "&apiKey=250b663cb5c4495fb447c0c6ab6f005e";
 
 
 const newAxiosInstance = axios.create();
