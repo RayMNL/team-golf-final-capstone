@@ -1,6 +1,5 @@
 package com.techelevator.dao;
 
-import com.techelevator.model.ExtendedIngredient;
 import com.techelevator.model.Recipe;
 import com.techelevator.exception.DaoException;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -69,6 +68,22 @@ public class JdbcRecipeDao implements RecipeDao {
 
         return listOfTheUsersCustomRecipes;
     }
+
+    /**
+     *
+     * @Override
+     *     public void updateUsersCustomRecipe(Recipe recipe) {
+     *         String sql = "UPDATE custom_recipes SET name= ?, ingredients= ?, instructions= ?, image= ? WHERE custom_recipe_id= ?;";
+     *         try {
+     *             jdbcTemplate.update(sql, recipe.getName(), recipe.getIngredients(), recipe.getInstructions(), recipe.getImg(), recipe.getRecipeId());
+     *         } catch (CannotGetJdbcConnectionException e) {
+     *             throw new DaoException("Unable to connect to server or database", e);
+     *         } catch (DataIntegrityViolationException e) {
+     *             throw new DaoException("Data Integrity Violated", e);
+     *         }
+     *     }
+     *
+     */
 
     private Recipe mapRowToRecipe(SqlRowSet rs) {
         Recipe recipe = new Recipe();

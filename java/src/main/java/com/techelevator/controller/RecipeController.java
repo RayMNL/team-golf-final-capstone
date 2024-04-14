@@ -5,6 +5,7 @@ import com.techelevator.dao.JdbcRecipeDao;
 import com.techelevator.dao.JdbcUserDao;
 import com.techelevator.dao.RecipeDao;
 import com.techelevator.dao.UserDao;
+import com.techelevator.exception.DaoException;
 import com.techelevator.model.Recipe;
 import com.techelevator.model.User;
 import org.springframework.http.HttpStatus;
@@ -93,6 +94,24 @@ public class RecipeController {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "User not authenticated");
         }
     }
+
+
+    /**
+     * @RequestMapping(path = "/users/update-custom-recipe", method = RequestMethod.PUT)
+     *     public ResponseEntity<String> updateACustomRecipe(@RequestBody Recipe recipe) {
+     *         try {
+     *             jdbcRecipeDao.updateUsersCustomRecipe(recipe);
+     *             return ResponseEntity.ok("Recipe updated successfully");
+     *         } catch (DaoException e) {
+     *             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error updating recipe: " + e.getMessage());
+     *         } catch (Exception e) {
+     *             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred: " + e.getMessage());
+     *         }
+     *     }
+     *
+     *
+     *
+     */
 
 }
 
