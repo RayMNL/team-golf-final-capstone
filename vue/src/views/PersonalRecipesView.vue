@@ -7,27 +7,30 @@
                 :class="{ 'selected': isSelected(tag) }">{{ tag }}</span>
         </div>
         <div v-if="newRecipe && newRecipe.length > 0" class="new-recipes">
-            <div class="recipe-container">
-                <div v-for="recipe in newRecipe" :key="recipe.recipeId" class="recipe-card">
-                    <div class="full-recipe" @click="recipe.showDetails = !recipe.showDetails">
-                        <img :src="recipe.img" alt="No Recipe" class="recipe-image">
-                        <div class="recipe-details">
-                            <h2 class="recipe-title"> {{ recipe.name }}</h2>
-                            <div v-if="recipe.showDetails">
-                                <h3>Ingredients:</h3>
-                                <ul>
-                                    <li v-for="(ingredient, index) in recipe.ingredients.split(',')" :key="index">{{ ingredient }}</li>
-                                </ul>
-                                <h3>Instructions:</h3>
-                                <ol>
-                                    <li v-for="(instruction, index) in recipe.instructions.split('.')" :key="index">{{ instruction }}</li>
-                                </ol>
-                            </div>
-                        </div>
+            <div v-for="recipe in newRecipe" :key="recipe.recipeId" class="card">
+                <div class="full-recipe" @click="recipe.showDetails = !recipe.showDetails">
+                    <img :src="recipe.img" alt="No Recipe" class="recipe-image">
+                    <div class="recipe-details">
+                    <h2 class="recipe-title"> {{ recipe.name }}</h2>
+                    <div v-if="recipe.showDetails">
+                        <h3>Ingredients:</h3>
+                        <ul>
+                            <li v-for="(ingredient, index) in recipe.ingredients.split(',')" :key="index">{{ ingredient }}
+                            </li>
+                        </ul>
+                        <h3>Instructions:</h3>
+                        <ol>
+                            <li v-for="(instruction, index) in recipe.instructions.split('.')" :key="index">{{ instruction
+                            }}</li>
+                        </ol>
                     </div>
+                </div>
                 </div>
             </div>
         </div>
+
+
+
         <div v-if="selectedRecipe">
             <button class="button" @click="selectedRecipe = null" id="back-to-recipes-button">Back to Recipes</button>
             <div id="success-message" v-if="showMessage" class="success-banner">
