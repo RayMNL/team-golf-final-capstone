@@ -6,11 +6,34 @@
             <span class="tag" v-for="tag in allTags" :key="tag" @click="toggleTag(tag)"
                 :class="{ 'selected': isSelected(tag) }">{{ tag }}</span>
         </div>
+
+        <div v-if="newRecipe && newRecipe.length > 0" class="new-recipes">
+    <div v-for="recipe in newRecipe" :key="recipe.recipeId" class="card">
+        <div class="full-recipe" @click="recipe.showDetails = !recipe.showDetails">
+            <img :src="recipe.img" alt="No Recipe" class="recipe-image">
+            <h3>Name: {{ recipe.name }}</h3>
+            <div v-if="recipe.showDetails">
+                <h3>Recipe ID: {{ recipe.recipeId }}</h3>
+                <h3>Ingredients:</h3>
+                <ul>
+                    <li v-for="(ingredient, index) in recipe.ingredients.split(',')" :key="index">{{ ingredient }}</li>
+                </ul>
+                <h3>Instructions:</h3>
+                <ol>
+                    <li v-for="(instruction, index) in recipe.instructions.split('.')" :key="index">{{ instruction }}</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
         <div v-if="selectedRecipe">
             <button class="button" @click="selectedRecipe = null" id="back-to-recipes-button">Back to Recipes</button>
             <div id="success-message" v-if="showMessage" class="success-banner">
-        {{ message }}
-    </div>
+                {{ message }}
+            </div>
             <div class="full-recipe">
                 <img :src="selectedRecipe.image" :alt="selectedRecipe.title" class="recipe-image">
                 <div class="recipe-details">
@@ -59,90 +82,95 @@
 <script>
 import SpoonService from '@/services/SpoonService';
 import LocalApiService from '../services/LocalApiService';
-// import CustomService from '../services/CustomService';
+import CustomService from '../services/CustomService';
 
 export default {
-  data() {
-      return {
-          recipes: [],
-          searchQuery: '',
-          selectedTags: [],
-          allTags: [],
-          selectedRecipe: null,
-          isRecipeSelected: false,
-          recipeIdString: '',
-        //   newRecipe: {
-        //         name: '',
-        //         ingredients: '',
-        //         instructions: '',
-        //         image: ''
-        //       },
+    data() {
+        return {
+            recipes: [],
+            searchQuery: '',
+            selectedTags: [],
+            allTags: [],
+            selectedRecipe: null,
+            isRecipeSelected: false,
+            recipeIdString: '',
+            newRecipe: {
+                recipeId: '',
+                name: '',
+                ingredients: '',
+                instructions: '',
+                img: ''
+            },
 
-      }
-  },
-  computed: {
-      filteredRecipes() {
-          return this.recipes.filter(recipe => {
-              const titleMatches = recipe.title.toLowerCase().includes(this.searchQuery.toLowerCase());
-              const allTagsMatch = this.selectedTags.every(tag => recipe.diets.includes(tag));
-              return titleMatches && allTagsMatch;
-          });
-      }
-  },
-  created() {
-    this.getDataFromLocal();
-      
-  },
-  methods: {
-
-    // getCustomData() {
-    //     CustomService.getCustomRecipe()
-    //     .then(response => {
-    //         this.newRecipe = response.data.newRecipe;
-    //          }).catch(err => console.error(err));
-    //     }
-
-    
-    getDataFromLocal() {
-        LocalApiService.getLibrary() 
-        .then(response => {
-            const recipeIDs = response.data; 
-            const recipeIDsString = recipeIDs.join(',');
-            this.recipeIdString = recipeIDsString
-            console.log('This is the id string:', recipeIDsString)
-            this.getDataFromSpoon();
-        }).catch(err => console.error(err));
+        }
     },
-    getDataFromSpoon() {
+    computed: {
+        filteredRecipes() {
+            return this.recipes.filter(recipe => {
+                const titleMatches = recipe.title.toLowerCase().includes(this.searchQuery.toLowerCase());
+                const allTagsMatch = this.selectedTags.every(tag => recipe.diets.includes(tag));
+                return titleMatches && allTagsMatch;
+            });
+        }
+    },
+    created() {
+        this.getDataFromLocal();
+
+    },
+    methods: {
+
+        getCustomData() {
+            CustomService.getCustomRecipe()
+                .then(response => {
+                    this.newRecipe = response.data;
+
+
+
+                    console.log('This is the newRecipe object: ', this.newRecipe);
+                }).catch(err => console.error(err));
+        },
+
+
+        getDataFromLocal() {
+            LocalApiService.getLibrary()
+                .then(response => {
+                    const recipeIDs = response.data;
+                    const recipeIDsString = recipeIDs.join(',');
+                    this.recipeIdString = recipeIDsString
+                    console.log('This is the id string:', recipeIDsString)
+                    this.getDataFromSpoon();
+                }).catch(err => console.error(err));
+        },
+        getDataFromSpoon() {
             SpoonService.getListOfRecipes(this.recipeIdString).then(response => {
                 this.recipes = response.data;
                 this.getAllTags();
-              //  this.getCustomData(); 
+                this.getCustomData();
             }).catch(err => console.error(err));
         },
 
-      toggleTag(tag) {
-          if (this.isSelected(tag)) {
-              this.selectedTags = this.selectedTags.filter(selectedTag => selectedTag !== tag);
-          } else {
-              this.selectedTags.push(tag);
-          }
-      },
-      isSelected(tag) {
-          return this.selectedTags.includes(tag);
-      },
-      getAllTags() {
-          const tagsSet = new Set();
-          this.recipes.forEach(recipe => {
-              recipe.diets.forEach(diet => tagsSet.add(diet));
-          });
-          this.allTags = Array.from(tagsSet);
-      },
-      showRecipe(recipe) {
-          this.selectedRecipe = recipe;
-          this.isRecipeSelected = true; 
-      }
-  }
+        toggleTag(tag) {
+            if (this.isSelected(tag)) {
+                this.selectedTags = this.selectedTags.filter(selectedTag => selectedTag !== tag);
+            } else {
+                this.selectedTags.push(tag);
+            }
+        },
+        isSelected(tag) {
+            return this.selectedTags.includes(tag);
+        },
+        getAllTags() {
+            const tagsSet = new Set();
+            this.recipes.forEach(recipe => {
+                recipe.diets.forEach(diet => tagsSet.add(diet));
+            });
+            this.allTags = Array.from(tagsSet);
+        },
+        showRecipe(recipe) {
+            this.selectedRecipe = recipe;
+            this.isRecipeSelected = true;
+        }
+    }
 }
 
 </script>
@@ -151,17 +179,17 @@ export default {
 
 <style scoped>
 .container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
 }
 
 .recipe-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  gap: 20px;
-  margin-right: auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 20px;
+    margin-right: auto;
 }
 
 .recipe-card {
@@ -185,48 +213,48 @@ export default {
 }
 
 .recipe-details {
-  padding: 10px;
+    padding: 10px;
 }
 
 .recipe-title {
-  margin: 0;
+    margin: 0;
 }
 
 .recipe-tags {
-  margin-top: 10px;
+    margin-top: 10px;
 }
 
 .tag {
-  display: inline-block;
-  margin-right: 5px;
-  padding: 3px 8px; 
-  background-color: #DDDDDD;
-  border-radius: 15px; 
-  font-size: 12px;
-  cursor: pointer;
+    display: inline-block;
+    margin-right: 5px;
+    padding: 3px 8px;
+    background-color: #DDDDDD;
+    border-radius: 15px;
+    font-size: 12px;
+    cursor: pointer;
 }
 
 .tag.selected {
-  background-color: #007bff;
-  color: #fff;
+    background-color: #007bff;
+    color: #fff;
 }
 
 .last-row-card {
-  width: 100%;
+    width: 100%;
 
 }
 
 .search-bar {
-  width: 97%;
-  margin-bottom: 20px;
-  padding: 10px;
-  font-size: 16px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  align-self: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    width: 97%;
+    margin-bottom: 20px;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    align-self: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 div.recipe-card,
@@ -239,17 +267,17 @@ div.tags-container {
 }
 
 .full-recipe {
-    max-width: 600px; 
+    max-width: 600px;
     margin: 0 auto;
     padding: 20px;
     border-radius: 5px;
-    background-color: #40E0D0; 
+    background-color: #40E0D0;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 /* Hover effect */
 .full-recipe:hover {
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); 
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 
@@ -261,7 +289,7 @@ div.tags-container {
 
 .full-recipe .recipe-image {
     width: 100%;
-    max-height: 200px; 
+    max-height: 200px;
     object-fit: cover;
     border-radius: 5px;
     margin-bottom: 10px;
@@ -285,22 +313,58 @@ div.recipe-details {
 }
 
 .button {
-  display: inline-block;
-  border-radius: 4px;
-  background-color: #f0f0f0; 
-  border: none;
-  color: #555555; 
-  text-align: center;
-  font-size: 14px; 
-  padding: 8px 12px; 
-  transition: all 0.3s;
-  cursor: pointer;
-  margin: 5px;
-  text-decoration: none;
+    display: inline-block;
+    border-radius: 4px;
+    background-color: #f0f0f0;
+    border: none;
+    color: #555555;
+    text-align: center;
+    font-size: 14px;
+    padding: 8px 12px;
+    transition: all 0.3s;
+    cursor: pointer;
+    margin: 5px;
+    text-decoration: none;
 }
 
 
 .button:hover {
-  background-color: #dddddd; 
+    background-color: #dddddd;
+}
+
+
+/* Start of newRecipe format */
+.new-recipes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.card {
+    flex: 1 0 300px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.card-body {
+    padding: 10px;
+}
+
+.card h3 {
+    margin-bottom: 5px;
+}
+
+.card ul {
+    margin-top: 0;
+    margin-bottom: 10px;
+    padding-left: 20px;
+}
+
+.card ol {
+    margin-top: 0;
+    margin-bottom: 10px;
+    padding-left: 20px;
 }
 </style>
