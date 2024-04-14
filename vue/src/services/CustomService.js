@@ -8,7 +8,7 @@ export default {
         return axios.post(`/users/add-custom-recipe/`,newRecipe);
     },
 
-    getCustomRecipe(customIds) {
-        return axios.get(`/users/list-of-custom-recipes`,customIds);
+    getCustomRecipe() {
+        return axios.get(`/users/list-of-custom-recipes`);
     }
 };
