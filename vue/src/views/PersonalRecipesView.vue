@@ -8,24 +8,27 @@
         </div>
 
         <div v-if="newRecipe && newRecipe.length > 0" class="new-recipes">
-    <div v-for="recipe in newRecipe" :key="recipe.recipeId" class="card">
-        <div class="full-recipe" @click="recipe.showDetails = !recipe.showDetails">
-            <img :src="recipe.img" alt="No Recipe" class="recipe-image">
-            <h3>Name: {{ recipe.name }}</h3>
-            <div v-if="recipe.showDetails">
-                <h3>Recipe ID: {{ recipe.recipeId }}</h3>
-                <h3>Ingredients:</h3>
-                <ul>
-                    <li v-for="(ingredient, index) in recipe.ingredients.split(',')" :key="index">{{ ingredient }}</li>
-                </ul>
-                <h3>Instructions:</h3>
-                <ol>
-                    <li v-for="(instruction, index) in recipe.instructions.split('.')" :key="index">{{ instruction }}</li>
-                </ol>
+            <div v-for="recipe in newRecipe" :key="recipe.recipeId" class="card">
+                <div class="full-recipe" @click="recipe.showDetails = !recipe.showDetails">
+                    <img :src="recipe.img" alt="No Recipe" class="recipe-image">
+                    <div class="recipe-details">
+                    <h2 class="recipe-title"> {{ recipe.name }}</h2>
+                    <div v-if="recipe.showDetails">
+                        <h3>Ingredients:</h3>
+                        <ul>
+                            <li v-for="(ingredient, index) in recipe.ingredients.split(',')" :key="index">{{ ingredient }}
+                            </li>
+                        </ul>
+                        <h3>Instructions:</h3>
+                        <ol>
+                            <li v-for="(instruction, index) in recipe.instructions.split('.')" :key="index">{{ instruction
+                            }}</li>
+                        </ol>
+                    </div>
+                </div>
+                </div>
             </div>
         </div>
-    </div>
-</div>
 
 
 
@@ -334,7 +337,7 @@ div.recipe-details {
 
 
 /* Start of newRecipe format */
-.new-recipes {
+/* .new-recipes {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
@@ -366,5 +369,5 @@ div.recipe-details {
     margin-top: 0;
     margin-bottom: 10px;
     padding-left: 20px;
-}
+} */
 </style>
