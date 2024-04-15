@@ -1,12 +1,5 @@
 <template>
     <div class="container">
-        <input type="text" v-model="searchQuery" placeholder="Search recipes..." class="search-bar" v-if="!selectedRecipe">
-        <div class="tags-container" v-if="!selectedRecipe">
-            <label for="filter">Filter: </label>
-            <span class="tag" v-for="tag in allTags" :key="tag" @click="toggleTag(tag)"
-                :class="{ 'selected': isSelected(tag) }">{{ tag }}</span>
-        </div>
-        
         <h2>Favorited Recipes</h2>
 
         <div v-if="selectedRecipe">
@@ -170,139 +163,13 @@ export default {
 }
 </script>
 
-<style scoped>
-.container {
+<style scoped>.container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
 }
-.recipe-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    gap: 20px;
-    margin-right: auto;
-}
-.recipe-card {
-    width: calc(25% - 39px);
-    margin-bottom: 20px;
-    border: 1px solid rgb(204, 204, 204);
-    border-radius: 5px;
-    overflow: hidden;
-    padding: 10px;
-    cursor: pointer; /* Add cursor pointer to indicate clickability */
-}
-.recipe-image {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-    max-width: 100%;
-    display: block;
-    border: 5px rgb(204, 204, 204);
-    border-radius: 5px;
-    margin-bottom: 10px;
-}
-.recipe-details {
-    padding: 10px;
-}
-.recipe-title {
-    margin: 0;
-}
-.recipe-tags {
-    margin-top: 10px;
-}
-.tag {
-    display: inline-block;
-    margin-right: 5px;
-    padding: 3px 8px;
-    background-color: #DDDDDD;
-    border-radius: 15px;
-    font-size: 12px;
-    cursor: pointer;
-}
-.tag.selected {
-    background-color: #007BFF;
-    color: #fff;
-}
-.search-bar {
-    width: 97%;
-    margin-bottom: 20px;
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    align-self: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.last-row-card {
-    width: 100%;
-}
-div.recipe-card,
-div.recipe-details {
-    background-color: #40E0D0;
-}
-div.tags-container {
-    margin-bottom: 25px;
-}
-.full-recipe {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 20px;
-    border-radius: 5px;
-    background-color: #40E0D0;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-/* Hover effect */
-.full-recipe:hover {
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-}
-.full-recipe .recipe-title {
-    font-size: 24px;
-    margin-bottom: 10px;
-}
-.full-recipe .recipe-image {
-    width: 100%;
-    max-height: 200px;
-    object-fit: cover;
-    border-radius: 5px;
-    margin-bottom: 10px;
-}
-.full-recipe .recipe-details {
-    font-size: 16px;
-    line-height: 1.5;
-}
-#back-to-recipes-button {
-    margin-bottom: 15px;
-    border-radius: 5px;
-}
-div.recipe-details {
-    height: 75%;
-    width: 75%;
-}
-.button {
-    display: inline-block;
-    border-radius: 4px;
-    background-color: #F0F0F0;
-    border: none;
-    color: #555555;
-    text-align: center;
-    font-size: 14px;
-    padding: 8px 12px;
-    transition: all 0.3s;
-    cursor: pointer;
-    margin: 5px;
-    text-decoration: none;
-}
-.button:hover {
-    background-color: #DDDDDD;
-}
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-}
+
+.recipe-container,
 .custom-new-recipes {
     display: flex;
     flex-wrap: wrap;
@@ -310,15 +177,21 @@ div.recipe-details {
     gap: 20px;
     margin-right: auto;
 }
-.card {
-    width: calc(25-39%);
+
+.recipe-card,
+.custom-recipe-card {
+    width: calc(25% - 39px);
     margin-bottom: 20px;
     border: 1px solid rgb(204, 204, 204);
-     border-radius: 5px;
+    border-radius: 5px;
     overflow: hidden;
-    /* padding: 10px; */
-    cursor: pointer; /* Add cursor pointer to indicate clickability */
+    padding: 10px;
+    cursor: pointer;
+    transition: all 0.3s; /* Add transition for smooth effect */
+    background-color: #40E0D0; /* Blue background color */
 }
+
+.recipe-image,
 .custom-recipe-image {
     width: 100%;
     height: 200px;
@@ -333,12 +206,44 @@ div.recipe-details {
     max-width: 200px;
     max-height: 200px;
 }
+
+.recipe-details,
 .custom-recipe-details {
     padding: 10px;
 }
+
+.recipe-title,
 .custom-recipe-title {
     margin: 0;
 }
+
+.recipe-tags,
+.custom-recipe-tags {
+    margin-top: 10px;
+}
+
+.tag {
+    display: inline-block;
+    margin-right: 5px;
+    padding: 3px 8px;
+    background-color: #DDDDDD;
+    border-radius: 15px;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.tag.selected {
+    background-color: #007BFF;
+    color: #fff;
+}
+
+.recipe-card:hover,
+.custom-recipe-card:hover {
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2); /* Add box-shadow on hover */
+    transform: translate(2px, 2px); /* Move the card 2px down and 2px right */
+}
+
+.full-recipe,
 .custom-full-recipe {
     max-width: 600px;
     margin: 0 auto;
@@ -347,14 +252,19 @@ div.recipe-details {
     background-color: #40E0D0;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
-/* Hover effect */
+
+.full-recipe:hover,
 .custom-full-recipe:hover {
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
+
+.full-recipe .recipe-title,
 .custom-full-recipe .custom-recipe-title {
     font-size: 24px;
     margin-bottom: 10px;
 }
+
+.full-recipe .recipe-image,
 .custom-full-recipe .custom-recipe-image {
     width: 100%;
     max-height: 200px;
@@ -362,10 +272,13 @@ div.recipe-details {
     border-radius: 5px;
     margin-bottom: 10px;
 }
+
+.full-recipe .recipe-details,
 .custom-full-recipe .custom-recipe-details {
     font-size: 16px;
     line-height: 1.5;
 }
+
 .button {
     display: inline-block;
     border-radius: 4px;
@@ -380,6 +293,7 @@ div.recipe-details {
     margin: 5px;
     text-decoration: none;
 }
+
 .button:hover {
     background-color: #DDDDDD;
 }

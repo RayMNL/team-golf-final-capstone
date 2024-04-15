@@ -1,30 +1,38 @@
 <template>
-    <nav class="navbar">
-      <div class="navbar-left">
-        <div class="logo">
-          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkk7ktNLRvLeJW0kv-LaiR5EKd5POOjewEmQ&usqp=CAU" alt="Plate Logo" class="plate-logo">
-          <span class="brand">Kitchen Chronicles</span>
-        </div>
+  <nav class="navbar">
+    <div class="navbar-left">
+      <div class="logo">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkk7ktNLRvLeJW0kv-LaiR5EKd5POOjewEmQ&usqp=CAU" alt="Plate Logo" class="plate-logo">
+        <span class="brand">Kitchen Chronicles</span>
       </div>
-      <div class="navbar-right">
-        <router-link v-bind:to="{ name: 'home' }">Home</router-link>
-        <span class="separator">|</span>
-        <router-link v-bind:to="{ name: 'spoon' }">Recipes</router-link>
-        <span class="separator">|</span>
-        <router-link v-bind:to="{ name: 'personal' }" v-if="$store.state.token != ''">My Recipes</router-link>
-        <span class="separator">|</span>
-        <router-link v-bind:to="{ name: 'custom' }">Custom Recipes</router-link>
-        <span class="separator">|</span> 
-        <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''" class="logout-link">Logout</router-link>
-      </div>
-    </nav>
-  </template>
-  
-  <script>
-  export default {
-    name: 'Header'
+    </div>
+    <div class="navbar-right">
+      <router-link v-bind:to="{ name: 'home' }">Home</router-link>
+      <span class="separator" v-if="$store.state.token !== ''"></span>
+      <router-link v-bind:to="{ name: 'spoon' }">Recipes</router-link>
+      <span class="separator" v-if="$store.state.token !== ''"></span>
+      <router-link v-bind:to="{ name: 'personal' }" v-if="$store.state.token !== ''">My Recipes</router-link>
+      <span class="separator" v-if="$store.state.token !== ''"></span>
+      <router-link v-bind:to="{ name: 'custom' }" v-if="$store.state.token !== ''">Custom Recipes</router-link>
+      <span class="separator" v-if="$store.state.token !== ''"></span>
+      <router-link v-bind:to="logoutOrLoginRoute" class="logout-link">{{ logoutOrLoginText }}</router-link>
+    </div>
+  </nav>
+</template>
+
+<script>
+export default {
+  name: 'Header',
+  computed: {
+    logoutOrLoginRoute() {
+      return this.$store.state.token !== '' ? { name: 'logout' } : { name: 'login' };
+    },
+    logoutOrLoginText() {
+      return this.$store.state.token !== '' ? 'Logout' : 'Login';
+    }
   }
-  </script>
+}
+</script>
   
   <style scoped>
   .navbar {

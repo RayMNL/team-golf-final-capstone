@@ -24,7 +24,7 @@ const routes = [
     name: 'home',
     component: HomeView,
     meta: {
-      requiresAuth: true
+      requiresAuth: false
     }
   },
   {
@@ -64,7 +64,7 @@ const routes = [
     name: "personal",
     component: PersonalRecipesView,
     meta: {
-      requiresAuth: false
+      requiresAuth: true
     }
   },
   {
@@ -72,7 +72,7 @@ const routes = [
     name: "custom",
     component: CustomRecipesView,
     meta: {
-      requiresAuth: false
+      requiresAuth: true
     }
   }
 
