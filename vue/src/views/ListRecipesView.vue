@@ -3,15 +3,14 @@
         <input type="text" v-model="searchQuery" placeholder="Search recipes..." class="search-bar" v-if="!selectedRecipe">
         <div class="tags-container" v-if="!selectedRecipe">
             <label for="filter">Filter: </label>
-            <span class="tag" v-for="tag in allTags" :key="tag" @click="toggleTag(tag)"
-                :class="{ 'selected': isSelected(tag) }">{{ tag }}</span>
+            <span v-for="tag in allTags" :key="tag" @click="toggleTag(tag)" :class="{ 'selected': isSelected(tag) }" class="tag">{{ tag }}</span>
         </div>
         <div v-if="selectedRecipe">
             <button type="button" class="btn btn-outline-primary" @click="selectedRecipe = null" id="back-to-recipes-button">Back to Recipes</button>
             <button class="button" @click="addToLibrary(selectedRecipe.id)" id="add-to-recipe-library-button">Add to Recipe Library</button>
             <div id="success-message" v-if="showMessage" class="success-banner">
-        {{ message }}
-    </div>
+                {{ message }}
+            </div>
             <div class="full-recipe">
                 <img :src="selectedRecipe.image" :alt="selectedRecipe.title" class="recipe-image">
                 <div class="recipe-details">
@@ -135,22 +134,20 @@ export default {
 }
 </script>
 
-
-
 <style scoped>
 .container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
-  
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: 'Clarkson Script', cursive; /* Updated font-family */
 }
 
 .recipe-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  gap: 20px;
-  margin-right: auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 20px;
+    margin-right: auto;
 }
 
 .recipe-card {
@@ -160,6 +157,12 @@ export default {
     border-radius: 5px;
     overflow: hidden;
     padding: 10px;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; /* Adding transition for box-shadow */
+}
+
+.recipe-card:hover {
+    transform: translate(-2px, -2px); /* Moving the card 2 pixels to the right and down on hover */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Adding shadow effect */
 }
 
 .recipe-image {
@@ -174,48 +177,67 @@ export default {
 }
 
 .recipe-details {
-  padding: 10px;
+    padding: 10px;
 }
 
 .recipe-title {
-  margin: 0;
+    margin: 0;
 }
 
 .recipe-tags {
-  margin-top: 10px;
+    margin-top: 10px;
 }
 
 .tag {
-  display: inline-block;
-  margin-right: 5px;
-  padding: 3px 8px; 
-  background-color: #DDDDDD;
-  border-radius: 15px; 
-  font-size: 12px;
-  cursor: pointer;
+    display: inline-block;
+    margin-right: 5px;
+    padding: 3px 8px; 
+    background-color: transparent;
+    border: 1px solid #DDDDDD;
+    border-radius: 15px; 
+    font-size: 12px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+    font-family: 'Clarkson Script', cursive; /* Updated font-family */
 }
 
 .tag.selected {
-  background-color: #007bff;
-  color: #fff;
+    background-color: #40E0D0;
+    color: #fff;
+    border-color: #007bff;
+}
+
+.tag.selected:hover {
+    background-color: #40E0D0; /* Darken the background color on hover for selected tags */
+    border-color: #0056b3; /* Darken the border color on hover for selected tags */
+}
+
+.tag:hover {
+    background-color: #40E0D0; /* Change background color on hover */
+    color: #fff; /* Change text color on hover */
+}
+
+.recipe-details .tag {
+    background-color: #DDDDDD; /* Keep the tags grey on the recipe card */
+    border-color: #DDDDDD; /* Keep the border grey on the recipe card */
+    color: #333333; /* Keep the text color dark on the recipe card */
 }
 
 .last-row-card {
-  width: 100%;
-
+    width: 100%;
 }
 
 .search-bar {
-  width: 97%;
-  margin-bottom: 20px;
-  padding: 10px;
-  font-size: 16px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  align-self: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    width: 97%;
+    margin-bottom: 20px;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    align-self: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 div.recipe-card,
@@ -241,12 +263,10 @@ div.tags-container {
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); 
 }
 
-
 .full-recipe .recipe-title {
     font-size: 24px;
     margin-bottom: 10px;
 }
-
 
 .full-recipe .recipe-image {
     width: 100%;
@@ -256,12 +276,10 @@ div.tags-container {
     margin-bottom: 10px;
 }
 
-
 .full-recipe .recipe-details {
     font-size: 16px;
     line-height: 1.5;
 }
-
 
 #back-to-recipes-button {
     margin-bottom: 15px;
@@ -274,22 +292,23 @@ div.recipe-details {
 }
 
 .button {
-  display: inline-block;
-  border-radius: 4px;
-  background-color: #f0f0f0; 
-  border: none;
-  color: #555555; 
-  text-align: center;
-  font-size: 14px; 
-  padding: 8px 12px; 
-  transition: all 0.3s;
-  cursor: pointer;
-  margin: 5px;
-  text-decoration: none;
+    display: inline-block;
+    border-radius: 4px;
+    background-color: #f0f0f0; 
+    border: none;
+    color: #555555; 
+    text-align: center;
+    font-size: 14px; 
+    padding: 8px 12px; 
+    transition: all 0.3s;
+    cursor: pointer;
+    margin: 5px;
+    text-decoration: none;
+    font-family: 'Clarkson Script', cursive; /* Updated font-family */
 }
 
 .button:hover {
-  background-color: #dddddd; 
+    background-color: #dddddd; 
 }
 
 .success-banner {
@@ -303,5 +322,6 @@ div.recipe-details {
     border-radius: 5px;
     z-index: 9999;
     text-align: center;
+    font-family: 'Clarkson Script', cursive; /* Updated font-family */
 }
 </style>

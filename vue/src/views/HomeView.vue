@@ -78,5 +78,6 @@ export default {
     text-decoration: none; 
     color: white; 
     cursor: pointer; 
+    font-family: 'Clarkson Script', cursive; 
 }
 </style>

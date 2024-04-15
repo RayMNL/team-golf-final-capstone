@@ -20,18 +20,32 @@
       </div>
     </nav>
     <router-view />
+    <Footer />
   </div>
 </template>
+
+<script>
+import Footer from './components/Footer.vue';
+
+export default {
+  components: {
+    Footer
+  }
+}
+</script>
 
 <style scoped>
 body {
   margin: 0;
   padding: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Set the minimum height of the body to 100% of the viewport height */
 }
 
 #capstone-app {
+  flex: 1; /* Allow the main content area to grow and take up remaining space */
   background-color: #f8f9fa;
-  margin: 0 !important;
   overflow-x: hidden;
 }
 
