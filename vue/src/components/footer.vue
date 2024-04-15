@@ -4,7 +4,6 @@
         <a href="#">About Us</a>
         <a href="#">Contact</a>
         <a href="#">Privacy Policy</a>
-        <!-- Add more placeholder links as needed -->
       </div>
       <div class="footer-text">
         &copy; 2024 Kitchen Chronicles. All rights reserved.

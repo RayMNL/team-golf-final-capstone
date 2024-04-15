@@ -6,8 +6,10 @@
             <span v-for="tag in allTags" :key="tag" @click="toggleTag(tag)" :class="{ 'selected': isSelected(tag) }" class="tag">{{ tag }}</span>
         </div>
         <div v-if="selectedRecipe">
-            <button type="button" class="btn btn-outline-primary" @click="selectedRecipe = null" id="back-to-recipes-button">Back to Recipes</button>
-            <button class="button" @click="addToLibrary(selectedRecipe.id)" id="add-to-recipe-library-button">Add to Recipe Library</button>
+            <div class="button-group">
+                <button type="button" class="btn btn-outline-primary smaller-button transparent-button" @click="selectedRecipe = null" id="back-to-recipes-button">Back to Recipes</button>
+                <button class="button smaller-button transparent-button" @click="addToLibrary(selectedRecipe.id)" id="add-to-recipe-library-button">Add to Recipe Library</button>
+            </div>
             <div id="success-message" v-if="showMessage" class="success-banner">
                 {{ message }}
             </div>
@@ -139,7 +141,7 @@ export default {
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
-    font-family: 'Clarkson Script', cursive; /* Updated font-family */
+    font-family: 'Clarkson Script', cursive; 
 }
 
 .recipe-container {
@@ -151,18 +153,18 @@ export default {
 }
 
 .recipe-card {
-    width: calc(25% - 39px);
+    width: calc(25% - 75px);
     margin-bottom: 20px;
     border: 1px solid rgb(204, 204, 204);
     border-radius: 5px;
     overflow: hidden;
     padding: 10px;
-    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; /* Adding transition for box-shadow */
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; 
 }
 
 .recipe-card:hover {
-    transform: translate(-2px, -2px); /* Moving the card 2 pixels to the right and down on hover */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Adding shadow effect */
+    transform: translate(-2px, -2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
 }
 
 .recipe-image {
@@ -198,29 +200,29 @@ export default {
     font-size: 12px;
     cursor: pointer;
     transition: background-color 0.3s, color 0.3s;
-    font-family: 'Clarkson Script', cursive; /* Updated font-family */
+    font-family: 'Clarkson Script', cursive; 
 }
 
 .tag.selected {
     background-color: #40E0D0;
     color: #fff;
-    border-color: #007bff;
+    border-color: #40E0D0;
 }
 
 .tag.selected:hover {
-    background-color: #40E0D0; /* Darken the background color on hover for selected tags */
-    border-color: #0056b3; /* Darken the border color on hover for selected tags */
+    background-color: #40E0D0; 
+    border-color: #40E0D0; 
 }
 
 .tag:hover {
-    background-color: #40E0D0; /* Change background color on hover */
-    color: #fff; /* Change text color on hover */
+    background-color: #40E0D0; 
+    color: #fff; 
 }
 
 .recipe-details .tag {
-    background-color: #DDDDDD; /* Keep the tags grey on the recipe card */
-    border-color: #DDDDDD; /* Keep the border grey on the recipe card */
-    color: #333333; /* Keep the text color dark on the recipe card */
+    background-color: #DDDDDD; 
+    border-color: #DDDDDD; 
+    color: #333333; 
 }
 
 .last-row-card {
@@ -281,34 +283,48 @@ div.tags-container {
     line-height: 1.5;
 }
 
-#back-to-recipes-button {
-    margin-bottom: 15px;
-    border-radius: 5px;
+.button-group {
+    display: flex;
+    align-items: center;
 }
 
-div.recipe-details {
-    height: 75%;
-    width: 75%;
-}
-
-.button {
-    display: inline-block;
-    border-radius: 4px;
-    background-color: #f0f0f0; 
-    border: none;
-    color: #555555; 
-    text-align: center;
+.smaller-button.transparent-button {
+    flex: 1; 
+    padding: 8px 16px; 
     font-size: 14px; 
-    padding: 8px 12px; 
+    background-color: transparent;
+    border: 1px solid #40E0D0;
+    color: #000; 
+    height: 38px; 
+    margin: 5px;
+    font-family: 'Clarkson Script', cursive;
+}
+
+.smaller-button.transparent-button:hover {
+    background-color: #40E0D0; 
+    color: #fff;
+}
+
+.button.transparent-button {
+    flex: 1; 
+    border-radius: 4px;
+    background-color: transparent;
+    border: 1px solid #40E0D0;
+    color: #000; 
+    text-align: center;
+    font-size: 14px;
+    padding: 8px 12px;
     transition: all 0.3s;
     cursor: pointer;
     margin: 5px;
     text-decoration: none;
-    font-family: 'Clarkson Script', cursive; /* Updated font-family */
+    font-family: 'Clarkson Script', cursive; 
+    height: 38px; 
 }
 
-.button:hover {
-    background-color: #dddddd; 
+.button.transparent-button:hover {
+    background-color: #40E0D0; 
+    color: #fff;
 }
 
 .success-banner {
@@ -322,6 +338,6 @@ div.recipe-details {
     border-radius: 5px;
     z-index: 9999;
     text-align: center;
-    font-family: 'Clarkson Script', cursive; /* Updated font-family */
+    font-family: 'Clarkson Script', cursive; 
 }
 </style>

@@ -164,8 +164,7 @@ export default {
             this.isRecipeSelected = true;
         },
         showCustomRecipe(recipe) {
-            this.selectedRecipe = recipe;
-            
+        recipe.showDetails = !recipe.showDetails;
         }
     }
 }
