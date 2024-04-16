@@ -3,12 +3,16 @@
         <input type="text" v-model="searchQuery" placeholder="Search recipes..." class="search-bar" v-if="!selectedRecipe">
         <div class="tags-container" v-if="!selectedRecipe">
             <label for="filter">Filter: </label>
-            <span v-for="tag in allTags" :key="tag" @click="toggleTag(tag)" :class="{ 'selected': isSelected(tag) }" class="tag">{{ tag }}</span>
+            <span v-for="tag in allTags" :key="tag" @click="toggleTag(tag)" :class="{ 'selected': isSelected(tag) }"
+                class="tag">{{ tag }}</span>
         </div>
         <div v-if="selectedRecipe">
             <div class="button-group">
-                <button type="button" class="btn btn-outline-primary smaller-button transparent-button" @click="selectedRecipe = null" id="back-to-recipes-button">Back to Recipes</button>
-                <button class="button smaller-button transparent-button" @click="addToLibrary(selectedRecipe.id)" id="add-to-recipe-library-button">Add to Recipe Library</button>
+                <button type="button" class="btn btn-outline-primary smaller-button transparent-button"
+                    @click="selectedRecipe = null" id="back-to-recipes-button">Back to Recipes</button>
+                <button class="button smaller-button transparent-button" @click="addToLibrary(selectedRecipe.id)"
+                    id="add-to-recipe-library-button">Add to Recipe Library</button>
+                <button class="button smaller-button transparent-button" @click="printRecipe">Print Recipe</button>
             </div>
             <div id="success-message" v-if="showMessage" class="success-banner">
                 {{ message }}
@@ -113,7 +117,7 @@ export default {
         },
         showRecipe(recipe) {
             this.selectedRecipe = recipe;
-            this.isRecipeSelected = true; 
+            this.isRecipeSelected = true;
         },
         addToLibrary(recipeId) {
             console.log("add to library of list recipes view: ", recipeId)
@@ -124,14 +128,19 @@ export default {
                 .catch(error => {
                     console.error('Error adding recipe to library:', error);
                 });
-                this.message = "Added to Recipe Library";
-                this.showMessage = true;
+            this.message = "Added to Recipe Library";
+            this.showMessage = true;
 
-                
-                setTimeout(() => {
-              this.showMessage = false;
+
+            setTimeout(() => {
+                this.showMessage = false;
             }, 3000);
+        },
+        printRecipe() {
+            window.print();
         }
+        
+
     }
 }
 </script>
@@ -141,7 +150,7 @@ export default {
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
-    font-family: 'Clarkson Script', cursive; 
+    font-family: 'Clarkson Script', cursive;
 }
 
 .recipe-container {
@@ -159,12 +168,12 @@ export default {
     border-radius: 5px;
     overflow: hidden;
     padding: 10px;
-    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; 
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 }
 
 .recipe-card:hover {
     transform: translate(-2px, -2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .recipe-image {
@@ -194,14 +203,14 @@ export default {
 .tag {
     display: inline-block;
     margin-right: 5px;
-    padding: 3px 8px; 
+    padding: 3px 8px;
     background-color: transparent;
     border: 1px solid #DDDDDD;
-    border-radius: 15px; 
+    border-radius: 15px;
     font-size: 12px;
     cursor: pointer;
     transition: background-color 0.3s, color 0.3s;
-    font-family: 'Clarkson Script', cursive; 
+    font-family: 'Clarkson Script', cursive;
 }
 
 .tag.selected {
@@ -211,19 +220,19 @@ export default {
 }
 
 .tag.selected:hover {
-    background-color: #40E0D0; 
-    border-color: #40E0D0; 
+    background-color: #40E0D0;
+    border-color: #40E0D0;
 }
 
 .tag:hover {
-    background-color: #40E0D0; 
-    color: #fff; 
+    background-color: #40E0D0;
+    color: #fff;
 }
 
 .recipe-details .tag {
-    background-color: #DDDDDD; 
-    border-color: #DDDDDD; 
-    color: #333333; 
+    background-color: #DDDDDD;
+    border-color: #DDDDDD;
+    color: #333333;
 }
 
 .last-row-card {
@@ -242,6 +251,7 @@ export default {
     align-items: center;
     justify-content: center;
 }
+
 h3 {
     font-size: 18px;
 }
@@ -256,17 +266,17 @@ div.tags-container {
 }
 
 .full-recipe {
-    max-width: 600px; 
+    max-width: 600px;
     margin: 0 auto;
     padding: 20px;
     border-radius: 5px;
-    background-color: #40E0D0; 
+    background-color: #40E0D0;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 /* Hover effect */
 .full-recipe:hover {
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); 
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 .full-recipe .recipe-title {
@@ -276,7 +286,7 @@ div.tags-container {
 
 .full-recipe .recipe-image {
     width: 100%;
-    max-height: 200px; 
+    max-height: 200px;
     object-fit: cover;
     border-radius: 5px;
     margin-bottom: 10px;
@@ -293,28 +303,28 @@ div.tags-container {
 }
 
 .smaller-button.transparent-button {
-    flex: 1; 
-    padding: 8px 16px; 
-    font-size: 14px; 
+    flex: 1;
+    padding: 8px 16px;
+    font-size: 14px;
     background-color: transparent;
     border: 1px solid #40E0D0;
-    color: #000; 
-    height: 38px; 
+    color: #000;
+    height: 38px;
     margin: 5px;
     font-family: 'Clarkson Script', cursive;
 }
 
 .smaller-button.transparent-button:hover {
-    background-color: #40E0D0; 
+    background-color: #40E0D0;
     color: #fff;
 }
 
 .button.transparent-button {
-    flex: 1; 
+    flex: 1;
     border-radius: 4px;
     background-color: transparent;
     border: 1px solid #40E0D0;
-    color: #000; 
+    color: #000;
     text-align: center;
     font-size: 14px;
     padding: 8px 12px;
@@ -322,26 +332,26 @@ div.tags-container {
     cursor: pointer;
     margin: 5px;
     text-decoration: none;
-    font-family: 'Clarkson Script', cursive; 
-    height: 38px; 
+    font-family: 'Clarkson Script', cursive;
+    height: 38px;
 }
 
 .button.transparent-button:hover {
-    background-color: #40E0D0; 
+    background-color: #40E0D0;
     color: #fff;
 }
 
 .success-banner {
-    position: fixed; 
-    top: 20px; 
+    position: fixed;
+    top: 20px;
     left: 50%;
-    transform: translateX(-50%); 
+    transform: translateX(-50%);
     background-color: #495057;
     color: white;
     padding: 15px 20px;
     border-radius: 5px;
     z-index: 9999;
     text-align: center;
-    font-family: 'Clarkson Script', cursive; 
+    font-family: 'Clarkson Script', cursive;
 }
 </style>

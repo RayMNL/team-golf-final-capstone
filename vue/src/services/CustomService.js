@@ -18,5 +18,9 @@ export default {
 
     updateRecipe(editedRecipe) {
         return axios.put('/users/update-custom-recipe', editedRecipe);
+    },
+
+    deleteRecipeById(recipeId) {
+        return axios.delete(`/delete/${recipeId}`);
     }
 };

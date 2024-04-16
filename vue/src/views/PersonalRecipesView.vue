@@ -3,8 +3,13 @@
         <h2>Favorited Recipes</h2>
         <div v-if="selectedRecipe">
             <button class="button" @click="selectedRecipe = null" id="back-to-recipes-button">Back to Recipes</button>
+            <button class="button print-button" @click="printRecipe">Print Recipe</button>
+            <button class="button delete-button" @click="deleteFromLibrary">Delete Recipe</button>
             <div id="success-message" v-if="showMessage" class="success-banner">
                 {{ message }}
+            </div>
+            <div id="success-message" v-if="showDeleteMessage" class="success-banner">
+                {{ deleteMessage }}
             </div>
             <div class="full-recipe">
                 <img :src="selectedRecipe.image" :alt="selectedRecipe.title" class="recipe-image">
@@ -69,6 +74,7 @@
                         
                         </div>
                         <button class="button" @click="getRecipeInfoById(recipe)">Edit Recipe</button>
+                        <button class="button delete-button" @click="deleteFromLibrary">Delete Recipe</button>
                         <!-- <router-link :to="{ name: 'editRecipe', params: { recipeId: recipe.recipeId }}" class="button" @click="getRecipeInfoById(recipe.recipeId)">Edit Recipe</router-link> -->
                     </div>
                 </div>
@@ -170,7 +176,24 @@ export default {
                     this.$router.push({ name: 'editRecipe', params: { recipeId: recipe.recipeId }})
                     console.log('This is the newRecipe object we are passing : ', this.newRecipe);
                 }).catch(err => console.error(err));
-        }
+        },
+        printRecipe() {
+            window.print(); // This will trigger the browser's print dialog for the detailed recipe card
+        },
+
+deleteFromLibrary(recipeId) {
+    console.log("delete from library of list recipes view: ", recipeId)
+    CustomService.deleteRecipeById(recipeId)
+        .then(response => {
+            console.log(response.data);
+        })
+        .catch(error => {
+            console.error('Error deleting recipe from library:', error);
+        });
+    this.deleteMessage = "Recipe Deleted From Library";
+    this.showDeleteMessage = true;
+
+}
 
     }
 }

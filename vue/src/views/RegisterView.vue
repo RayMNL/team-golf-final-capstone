@@ -78,17 +78,17 @@ export default {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: white; 
+  background-color: white;
 }
 
 .blue-box {
-  background-color: #40E0D0; 
+  background-color: #40E0D0;
   padding: 20px;
-  border-radius: 10px; 
+  border-radius: 10px;
 }
 
 .login-form {
-  width: 500px; 
+  width: 500px;
 }
 
 .form-input-group {
@@ -107,12 +107,12 @@ button {
   color: white;
   cursor: pointer;
   font-family: 'Clarkson Script', cursive;
-  background-color: #6c757d; 
+  background-color: #6c757d;
   border: none;
 }
 
 button:hover {
-  background-color: #808080; 
+  background-color: #808080;
 }
 
 .alert {
