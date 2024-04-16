@@ -110,6 +110,15 @@ public class JdbcRecipeDao implements RecipeDao {
         jdbcTemplate.update(sqlToDeleteFromDatabase, recipeId);
     }
 
+    @Override
+    public void deleteFavoriteRecipeById(int recipeId) {
+        String sqlToDeleteRecipeFromUsersTable = "DELETE FROM user_recipes WHERE recipe_id = ?;";
+        jdbcTemplate.update(sqlToDeleteRecipeFromUsersTable, recipeId);
+
+        String sqlToDeleteFromDatabase = "DELETE FROM recipes WHERE recipe_id = ?;";
+        jdbcTemplate.update(sqlToDeleteFromDatabase, recipeId);
+    }
+
 
     private Recipe mapRowToRecipe(SqlRowSet rs) {
         Recipe recipe = new Recipe();

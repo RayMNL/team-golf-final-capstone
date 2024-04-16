@@ -19,4 +19,5 @@ public interface RecipeDao {
     Recipe getCustomRecipeById(int recipeId);
 
     void deleteCustomRecipeById(int recipeId);
+    void deleteFavoriteRecipeById(int recipeId);
 }
