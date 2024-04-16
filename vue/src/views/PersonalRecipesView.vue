@@ -1,7 +1,6 @@
 <template>
     <div class="container">
         <h2>Favorited Recipes</h2>
-
         <div v-if="selectedRecipe">
             <button class="button" @click="selectedRecipe = null" id="back-to-recipes-button">Back to Recipes</button>
             <div id="success-message" v-if="showMessage" class="success-banner">
@@ -49,12 +48,12 @@
                 </div>
             </div>
         </div>
-
         <h2>Custom Recipes</h2>
-
         <div class="custom-new-recipes">
             <div v-if="newRecipe && newRecipe.length > 0" class="custom-new-recipes">
-                <div v-for="recipe in newRecipe" :key="recipe.recipeId" class="recipe-card" @click="showCustomRecipe(recipe)">
+                <div v-for="recipe in newRecipe" :key="recipe.recipeId" class="recipe-card"
+                    @click="toggleCustomRecipeExpansion(recipe)"
+                    :class="{ 'expanded': recipe.showDetails }">
                     <img :src="recipe.img" alt="No Image Available" class="recipe-image">
                     <div class="recipe-details">
                         <h2 class="recipe-title"> {{ recipe.name }}</h2>
@@ -68,6 +67,7 @@
                                 <li v-for="(instruction, index) in recipe.instructions.split('.')" :key="index">{{ instruction }}</li>
                             </ol>
                         </div>
+                        <router-link :to="{ name: 'editRecipe'}" class="button" @click=getRecipeInfoById(recipe.recipeId)>Edit Recipe</router-link>
                     </div>
                 </div>
             </div>
@@ -156,14 +156,23 @@ export default {
             this.selectedRecipe = recipe;
             this.isRecipeSelected = true;
         },
-        showCustomRecipe(recipe) {
-        recipe.showDetails = !recipe.showDetails;
+        toggleCustomRecipeExpansion(recipe) {
+            recipe.showDetails = !recipe.showDetails;
+        },
+        getRecipeInfoById(){
+          CustomService.getRecipeById(this.newRecipe.recipeId)
+                .then(response => {
+                    this.newRecipe = response.data;
+                    console.log('This is the newRecipe object: ', this.newRecipe.recipeId);
+                }).catch(err => console.error(err));
         }
+
     }
 }
 </script>
 
-<style scoped>.container {
+<style scoped>
+.container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
@@ -180,7 +189,8 @@ export default {
 
 .recipe-card,
 .custom-recipe-card {
-    width: calc(25% - 39px);
+    position: relative; /* Add relative positioning */
+    width: calc(25% - 39px); /* Set initial width */
     margin-bottom: 20px;
     border: 1px solid rgb(204, 204, 204);
     border-radius: 5px;
@@ -189,6 +199,12 @@ export default {
     cursor: pointer;
     transition: all 0.3s; /* Add transition for smooth effect */
     background-color: #40E0D0; /* Blue background color */
+}
+
+.custom-recipe-card.expanded {
+    position: absolute; /* Change to absolute positioning */
+    width: 100%; /* Expand to full width */
+    z-index: 1; /* Ensure the expanded card is above other elements */
 }
 
 .recipe-image,

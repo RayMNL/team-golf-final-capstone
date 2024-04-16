@@ -19,7 +19,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .big-image {
     height: 100vh;
     width: 100vw;

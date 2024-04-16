@@ -10,5 +10,9 @@ export default {
 
     getCustomRecipe() {
         return axios.get(`/users/list-of-custom-recipes`);
+    },
+    
+    getRecipeById(recipeId) {
+        return axios.get(`/custom-recipes/${recipeId}`);
     }
 };
