@@ -184,6 +184,7 @@ export default {
 
 .recipe-title {
     margin: 0;
+    font-size: 25px;
 }
 
 .recipe-tags {
@@ -240,6 +241,9 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+h3 {
+    font-size: 18px;
 }
 
 div.recipe-card,

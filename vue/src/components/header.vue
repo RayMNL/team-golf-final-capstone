@@ -8,13 +8,13 @@
     </div>
     <div class="navbar-right">
       <router-link v-bind:to="{ name: 'home' }">Home</router-link>
-      <span class="separator" v-if="$store.state.token !== ''"></span>
+      <span class="separator" v-if="$store.state.token !== ''">|</span>
       <router-link v-bind:to="{ name: 'spoon' }">Recipes</router-link>
-      <span class="separator" v-if="$store.state.token !== ''"></span>
+      <span class="separator" v-if="$store.state.token !== ''">|</span>
       <router-link v-bind:to="{ name: 'personal' }" v-if="$store.state.token !== ''">My Recipes</router-link>
-      <span class="separator" v-if="$store.state.token !== ''"></span>
+      <span class="separator" v-if="$store.state.token !== ''">|</span>
       <router-link v-bind:to="{ name: 'custom' }" v-if="$store.state.token !== ''">Add Recipes</router-link>
-      <span class="separator" v-if="$store.state.token !== ''"></span>
+      <span class="separator" v-if="$store.state.token !== ''">|</span>
       <router-link v-bind:to="logoutOrLoginRoute" class="logout-link">{{ logoutOrLoginText }}</router-link>
     </div>
   </nav>

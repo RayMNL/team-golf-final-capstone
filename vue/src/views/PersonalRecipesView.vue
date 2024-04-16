@@ -195,7 +195,7 @@ export default {
 .recipe-card,
 .custom-recipe-card {
     position: relative; /* Add relative positioning */
-    width: calc(25% - 39px); /* Set initial width */
+    width: calc(25% - 75px); /* Set initial width */
     margin-bottom: 20px;
     border: 1px solid rgb(204, 204, 204);
     border-radius: 5px;
@@ -233,7 +233,13 @@ export default {
     padding: 10px;
 }
 
-.recipe-title,
+.recipe-title{
+    font-size: 25px;
+}
+
+h3{
+    font-size: 18px;
+}
 .custom-recipe-title {
     margin: 0;
 }
