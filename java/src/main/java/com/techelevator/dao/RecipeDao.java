@@ -2,7 +2,6 @@ package com.techelevator.dao;
 
 import com.techelevator.model.Recipe;
 
-import java.security.Principal;
 import java.util.List;
 
 public interface RecipeDao {
@@ -12,9 +11,10 @@ public interface RecipeDao {
 
     List<Integer> getListOfUsersRecipes(int userId);
 
-    Recipe addCustomRecipeToDatabaseAndUsersList(int userId, Recipe recipe);
+    Recipe addCustomRecipeToDatabaseAndUsersList(int userId,Recipe recipe);
 
     List<Recipe> getListOfUsersCustomRecipes(int userId);
 
-    // void updateUsersCustomRecipe(Recipe recipe);
+    Recipe updateUsersCustomRecipe(Recipe recipe);
+    Recipe getCustomRecipeById(int recipeId);
 }

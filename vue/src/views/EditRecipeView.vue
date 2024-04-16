@@ -31,6 +31,8 @@
   </template>
   
   <script>
+import CustomService from '../services/CustomService';
+
   export default {
     props: ['selectedRecipe'],
     data() {
@@ -46,6 +48,8 @@
     },
     created() {
       // When the component is created, populate editedRecipe with selectedRecipe data
+      this.editedRecipe=this.$store.state.selectedRecipe
+      console.log(this.editedRecipe);
       if (this.selectedRecipe) {
         this.editedRecipe.name = this.selectedRecipe.name;
         this.editedRecipe.ingredients = this.selectedRecipe.ingredients;
@@ -55,9 +59,12 @@
     },
     methods: {
       saveEditedRecipe() {
-        // Call a method to save the edited recipe
-        // You can emit an event or use Vuex to communicate with CustomRecipesView
-        // Example: this.$emit('save', this.editedRecipe);
+        CustomService.updateRecipe(this.editedRecipe)
+        .then(response => {
+                    this.$router.push({ name: "personal" });
+                })
+                .catch(err => console.error(err));
+    
       }
     }
   }

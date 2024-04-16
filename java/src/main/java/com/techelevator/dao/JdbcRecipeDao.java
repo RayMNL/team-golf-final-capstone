@@ -8,8 +8,6 @@ import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
-import javax.swing.*;
-import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -69,21 +67,39 @@ public class JdbcRecipeDao implements RecipeDao {
         return listOfTheUsersCustomRecipes;
     }
 
-    /**
-     *
-     * @Override
-     *     public void updateUsersCustomRecipe(Recipe recipe) {
-     *         String sql = "UPDATE custom_recipes SET name= ?, ingredients= ?, instructions= ?, image= ? WHERE custom_recipe_id= ?;";
-     *         try {
-     *             jdbcTemplate.update(sql, recipe.getName(), recipe.getIngredients(), recipe.getInstructions(), recipe.getImg(), recipe.getRecipeId());
-     *         } catch (CannotGetJdbcConnectionException e) {
-     *             throw new DaoException("Unable to connect to server or database", e);
-     *         } catch (DataIntegrityViolationException e) {
-     *             throw new DaoException("Data Integrity Violated", e);
-     *         }
-     *     }
-     *
-     */
+    @Override
+    public Recipe updateUsersCustomRecipe(Recipe recipe) {
+        Recipe updatedRecipe = null;
+        String sql = "UPDATE custom_recipes SET name = ?, ingredients = ?, instructions = ?, image = ? WHERE custom_recipe_id =?";
+        try {
+            int numberOfRows = jdbcTemplate.update(sql, recipe.getName(), recipe.getIngredients(), recipe.getInstructions(), recipe.getImg(), recipe.getRecipeId());
+            if (numberOfRows == 0) {
+                throw new DaoException("Zero rows affected, expected at least one");
+            } else {
+                updatedRecipe = getCustomRecipeById(recipe.getRecipeId());
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        } catch (DataIntegrityViolationException e) {
+            throw new DaoException("Data integrity violation", e);
+        }
+        return updatedRecipe;
+    }
+
+    @Override
+    public Recipe getCustomRecipeById(int recipeId) {
+        Recipe customRecipe = null;
+        String sql = "SELECT custom_recipe_id, name, ingredients, instructions, image FROM custom_recipes WHERE custom_recipe_id = ?";
+        try {
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, recipeId);
+            if (results.next()) {
+                customRecipe = mapRowToRecipe(results);
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        }
+        return customRecipe;
+    }
 
     private Recipe mapRowToRecipe(SqlRowSet rs) {
         Recipe recipe = new Recipe();
@@ -94,6 +110,5 @@ public class JdbcRecipeDao implements RecipeDao {
         recipe.setImg(rs.getString("image"));
         return recipe;
     }
+
 }
-
-

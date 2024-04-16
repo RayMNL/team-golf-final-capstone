@@ -66,8 +66,10 @@
                             <ol>
                                 <li v-for="(instruction, index) in recipe.instructions.split('.')" :key="index">{{ instruction }}</li>
                             </ol>
+                        
                         </div>
-                        <router-link :to="{ name: 'editRecipe'}" class="button" @click=getRecipeInfoById(recipe.recipeId)>Edit Recipe</router-link>
+                        <button class="button" @click="getRecipeInfoById(recipe)">Edit Recipe</button>
+                        <!-- <router-link :to="{ name: 'editRecipe', params: { recipeId: recipe.recipeId }}" class="button" @click="getRecipeInfoById(recipe.recipeId)">Edit Recipe</router-link> -->
                     </div>
                 </div>
             </div>
@@ -159,11 +161,14 @@ export default {
         toggleCustomRecipeExpansion(recipe) {
             recipe.showDetails = !recipe.showDetails;
         },
-        getRecipeInfoById(){
-          CustomService.getRecipeById(this.newRecipe.recipeId)
+        getRecipeInfoById(recipe){
+          const recipeId = this.$route.params.recipeId;
+          CustomService.getRecipeById(recipe.recipeId)
                 .then(response => {
                     this.newRecipe = response.data;
-                    console.log('This is the newRecipe object: ', this.newRecipe.recipeId);
+                    this.$store.state.selectedRecipe=response.data;
+                    this.$router.push({ name: 'editRecipe', params: { recipeId: recipe.recipeId }})
+                    console.log('This is the newRecipe object we are passing : ', this.newRecipe);
                 }).catch(err => console.error(err));
         }
 
