@@ -135,10 +135,10 @@ public class RecipeController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @RequestMapping(path="/delete-favorite/{recipeId}", method = RequestMethod.DELETE)
     public void deleteFavoriteRecipeById(@PathVariable("recipeId") int recipeId) {
-        Recipe existingRecipe = jdbcRecipeDao.getCustomRecipeById(recipeId);
-        if (existingRecipe == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Recipe Not Found");
-        }
+//        Recipe existingRecipe = jdbcRecipeDao.getCustomRecipeById(recipeId);
+//       if (existingRecipe == null) {
+//           throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Recipe Not Found");
+//        }
         jdbcRecipeDao.deleteFavoriteRecipeById(recipeId);
     }
 

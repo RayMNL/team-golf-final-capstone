@@ -4,7 +4,7 @@
         <div v-if="selectedRecipe">
             <button class="button" @click="selectedRecipe = null" id="back-to-recipes-button">Back to Recipes</button>
             <button class="button print-button" @click="printRecipe">Print Recipe</button>
-            <button class="button delete-button" @click="deleteFromLibrary(selectedRecipe)">Delete Recipe</button>
+            <button class="button delete-button" @click="deleteFromFavorite(selectedRecipe)">Delete Recipe</button>
             <div id="success-message" v-if="showMessage" class="success-banner">
                 {{ message }}
             </div>
@@ -195,9 +195,11 @@ deleteFromLibrary(recipe) {
     this.showDeleteMessage = true;
 
 },
-deleteFromFavorite(recipe) {
-    console.log("delete from library of list recipes view: ", recipe.recipeId)
-    LocalApiService.deleteFavoriteRecipe(recipe.recipeId)
+deleteFromFavorite(selectedRecipe) {
+    const favoriteId = selectedRecipe.id;
+    console.log("delete from library of list recipes view: ", favoriteId)
+    console.log("recipe object: ",selectedRecipe);
+    LocalApiService.deleteFavoriteRecipe(favoriteId)
         .then(response => {
             console.log(response.data);
             window.location.reload();
