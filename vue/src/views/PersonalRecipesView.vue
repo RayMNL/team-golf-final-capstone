@@ -4,7 +4,7 @@
         <div v-if="selectedRecipe">
             <button class="button" @click="selectedRecipe = null" id="back-to-recipes-button">Back to Recipes</button>
             <button class="button print-button" @click="printRecipe">Print Recipe</button>
-            <button class="button delete-button" @click="deleteFromLibrary">Delete Recipe</button>
+            <button class="button delete-button" @click="deleteFromLibrary(selectedRecipe)">Delete Recipe</button>
             <div id="success-message" v-if="showMessage" class="success-banner">
                 {{ message }}
             </div>
@@ -74,7 +74,7 @@
                         
                         </div>
                         <button class="button" @click="getRecipeInfoById(recipe)">Edit Recipe</button>
-                        <button class="button delete-button" @click="deleteFromLibrary">Delete Recipe</button>
+                        <button class="button delete-button" @click="deleteFromLibrary(recipe)">Delete Recipe</button>
                         <!-- <router-link :to="{ name: 'editRecipe', params: { recipeId: recipe.recipeId }}" class="button" @click="getRecipeInfoById(recipe.recipeId)">Edit Recipe</router-link> -->
                     </div>
                 </div>
@@ -181,11 +181,26 @@ export default {
             window.print(); // This will trigger the browser's print dialog for the detailed recipe card
         },
 
-deleteFromLibrary(recipeId) {
-    console.log("delete from library of list recipes view: ", recipeId)
-    CustomService.deleteRecipeById(recipeId)
+deleteFromLibrary(recipe) {
+    console.log("delete from library of list recipes view: ", recipe.recipeId)
+    CustomService.deleteRecipeById(recipe.recipeId)
         .then(response => {
             console.log(response.data);
+            window.location.reload();
+        })
+        .catch(error => {
+            console.error('Error deleting recipe from library:', error);
+        });
+    this.deleteMessage = "Recipe Deleted From Library";
+    this.showDeleteMessage = true;
+
+},
+deleteFromFavorite(recipe) {
+    console.log("delete from library of list recipes view: ", recipe.recipeId)
+    LocalApiService.deleteFavoriteRecipe(recipe.recipeId)
+        .then(response => {
+            console.log(response.data);
+            window.location.reload();
         })
         .catch(error => {
             console.error('Error deleting recipe from library:', error);

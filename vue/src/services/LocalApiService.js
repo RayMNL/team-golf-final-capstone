@@ -6,5 +6,9 @@ export default {
 
     getLibrary() {
         return axios.get('/users/recipes');
+    },
+
+    deleteFavoriteRecipe(recipeId) {
+        return axios.delete(`/delete-favorite/${recipeId}`)
     }
 };
