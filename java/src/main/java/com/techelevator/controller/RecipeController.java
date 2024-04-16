@@ -123,5 +123,15 @@ public class RecipeController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Custom recipe not found");
         }
     }
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @RequestMapping(path="/delete/{recipeId}", method = RequestMethod.DELETE)
+    public void deleteCustomRecipeById(@PathVariable("recipeId") int recipeId) {
+        Recipe existingRecipe = jdbcRecipeDao.getCustomRecipeById(recipeId);
+        if (existingRecipe == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Recipe Not Found");
+        }
+        jdbcRecipeDao.deleteCustomRecipeById(recipeId);
+    }
+
 
 }
