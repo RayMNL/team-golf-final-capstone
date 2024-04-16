@@ -17,4 +17,6 @@ public interface RecipeDao {
 
     Recipe updateUsersCustomRecipe(Recipe recipe);
     Recipe getCustomRecipeById(int recipeId);
+
+    void deleteCustomRecipeById(int recipeId);
 }

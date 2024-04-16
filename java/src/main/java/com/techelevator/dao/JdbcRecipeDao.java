@@ -101,6 +101,16 @@ public class JdbcRecipeDao implements RecipeDao {
         return customRecipe;
     }
 
+    @Override
+    public void deleteCustomRecipeById(int recipeId) {
+        String sqlToDeleteRecipeFromUsersTable = "DELETE FROM user_custom_recipes WHERE custom_recipe_id = ?";
+        jdbcTemplate.update(sqlToDeleteRecipeFromUsersTable, recipeId);
+
+        String sqlToDeleteFromDatabase = "DELETE FROM custom_recipes WHERE custom_recipe_id = ?;";
+        jdbcTemplate.update(sqlToDeleteFromDatabase, recipeId);
+    }
+
+
     private Recipe mapRowToRecipe(SqlRowSet rs) {
         Recipe recipe = new Recipe();
         recipe.setRecipeId(rs.getInt("custom_recipe_id"));
