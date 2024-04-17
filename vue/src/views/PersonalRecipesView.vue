@@ -11,6 +11,7 @@
             <div id="success-message" v-if="showMessage" class="success-banner">
         {{ message }}
     </div>
+    
             <div class="full-recipe">
                 <img :src="selectedRecipe.image" :alt="selectedRecipe.title" class="recipe-image">
                 <div class="recipe-details">
