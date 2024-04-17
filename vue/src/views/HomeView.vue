@@ -19,7 +19,11 @@ export default {
 };
 </script>
 
+<<<<<<< HEAD
 <style>
+=======
+<style scoped>
+>>>>>>> dd7500772eac4f5f29c0864e52a8e99f7fe63650
 .big-image {
     height: 100vh;
     width: 100vw;
@@ -78,5 +82,9 @@ export default {
     text-decoration: none; 
     color: white; 
     cursor: pointer; 
+<<<<<<< HEAD
+=======
+    font-family: 'Clarkson Script', cursive; 
+>>>>>>> dd7500772eac4f5f29c0864e52a8e99f7fe63650
 }
 </style>

@@ -1,5 +1,6 @@
 <template>
   <div id="capstone-app">
+<<<<<<< HEAD
     <nav class="navbar">
       <div class="navbar-left">
         <div class="logo">
@@ -19,18 +20,39 @@
         <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''" class="logout-link">Logout</router-link>
       </div>
     </nav>
+=======
+    <Header />
+>>>>>>> dd7500772eac4f5f29c0864e52a8e99f7fe63650
     <router-view />
+    <Footer />
   </div>
 </template>
 
-<style scoped>
+<script>
+import Header from './components/header.vue';
+import Footer from './components/footer.vue';
+
+export default {
+  components: {
+    Header,
+    Footer
+  }
+}
+</script>
+
+<style>
 body {
   margin: 0;
   padding: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; 
 }
 
 #capstone-app {
+  flex: 1; 
   background-color: #f8f9fa;
+<<<<<<< HEAD
   margin: 0 !important;
   overflow-x: hidden;
 }
@@ -97,5 +119,7 @@ body {
 
 .logout-link {
   margin-left: auto;
+=======
+>>>>>>> dd7500772eac4f5f29c0864e52a8e99f7fe63650
 }
 </style>

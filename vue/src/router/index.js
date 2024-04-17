@@ -9,6 +9,7 @@ import RegisterView from '../views/RegisterView.vue';
 import ListRecipesView from '../views/ListRecipesView.vue';
 import PersonalRecipesView from '../views/PersonalRecipesView.vue';
 import CustomRecipesView from '../views/CustomRecipesView.vue';
+import EditRecipeView from '../views/EditRecipeView.vue'; 
 
 /**
  * The Vue Router is used to "direct" the browser to render a specific view component
@@ -24,7 +25,7 @@ const routes = [
     name: 'home',
     component: HomeView,
     meta: {
-      requiresAuth: true
+      requiresAuth: false
     }
   },
   {
@@ -64,7 +65,7 @@ const routes = [
     name: "personal",
     component: PersonalRecipesView,
     meta: {
-      requiresAuth: false
+      requiresAuth: true
     }
   },
   {
@@ -72,7 +73,15 @@ const routes = [
     name: "custom",
     component: CustomRecipesView,
     meta: {
-      requiresAuth: false
+      requiresAuth: true
+    }
+  },
+  {
+    path: "/edit-recipe", // Define the route for editing recipe
+    name: "editRecipe",
+    component: EditRecipeView, // Associate with the EditRecipeView component
+    meta: {
+      requiresAuth: true
     }
   }
 
