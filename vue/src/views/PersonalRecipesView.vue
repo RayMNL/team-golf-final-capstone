@@ -2,9 +2,13 @@
     <div class="container">
         <h2>Favorited Recipes</h2>
         <div v-if="selectedRecipe">
-            <button class="button" @click="selectedRecipe = null" id="back-to-recipes-button">Back to Recipes</button>
-            <button class="button print-button" @click="printRecipe">Print Recipe</button>
-            <button class="button delete-button" @click="deleteFromFavorite(selectedRecipe)">Delete Recipe</button>
+            <div class="button-container">
+            <div class="button-group">
+                <button type="button" class="btn btn-outline-primary smaller-button transparent-button"
+                    @click="selectedRecipe = null" id="back-to-recipes-button">Back to Recipes</button>
+                <button class="button smaller-button transparent-button" @click="printRecipe">Print Recipe</button>
+            </div>
+        </div>
             <div id="success-message" v-if="showMessage" class="success-banner">
                 {{ message }}
             </div>
@@ -42,6 +46,8 @@
                     class="recipe-card" @click="showRecipe(recipe)">
                     <img v-if="recipe.image" :src="recipe.image" :alt="recipe.title" class="recipe-image">
                     <div class="recipe-details">
+                        <div class="delete-custom-button" @click="deleteFromFavorite(recipe)"><span
+                                class="button-text">x</span></div>
                         <h2 class="recipe-title">{{ recipe.title }}</h2>
                         <div class="recipe-tags">
                             <span v-for="diet in recipe.diets" :key="diet" class="tag">{{ diet }}</span>
@@ -73,8 +79,9 @@
                             </ol>
                         
                         </div>
-                        <button class="button" @click="getRecipeInfoById(recipe)">Edit Recipe</button>
-                        <button class="button delete-button" @click="deleteFromLibrary(recipe)">Delete Recipe</button>
+                        <button class="button smaller-button transparent-button" @click="getRecipeInfoById(recipe)">Edit Recipe</button>
+                        <div class="delete-custom-button" @click="deleteFromLibrary(recipe)"><span
+                                class="button-text">x</span></div>
                         <!-- <router-link :to="{ name: 'editRecipe', params: { recipeId: recipe.recipeId }}" class="button" @click="getRecipeInfoById(recipe.recipeId)">Edit Recipe</router-link> -->
                     </div>
                 </div>
@@ -104,6 +111,10 @@ export default {
                 instructions: '',
                 img: ''
             },
+            showMessage: false,
+            message: "",
+            showDeleteMessage: false,
+            deleteMessage: ""
         }
     },
     computed: {
@@ -217,6 +228,24 @@ deleteFromFavorite(selectedRecipe) {
 </script>
 
 <style scoped>
+.delete-custom-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    border-radius: 0;
+    background-color: #f00;
+    color: #fff;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+ .delete-custom-button:hover {
+    opacity: 1;
+}
 .container {
     max-width: 1200px;
     margin: 0 auto;
@@ -262,9 +291,9 @@ deleteFromFavorite(selectedRecipe) {
     border: 5px rgb(204, 204, 204);
     border-radius: 5px;
     margin-bottom: 10px;
-    min-width: 200px;
+    /* min-width: 200px; */
     min-height: 150px;
-    max-width: 200px;
+    /* max-width: 200px; */
     max-height: 200px;
 }
 
@@ -275,6 +304,10 @@ deleteFromFavorite(selectedRecipe) {
 
 .recipe-title{
     font-size: 25px;
+}
+
+h2 {
+    font-family: 'Clarkson Script', cursive;
 }
 
 h3{
@@ -293,14 +326,16 @@ h3{
     display: inline-block;
     margin-right: 5px;
     padding: 3px 8px;
-    background-color: #DDDDDD;
+    background-color: #4682B4;
     border-radius: 15px;
     font-size: 12px;
+    color: #DDDDDD;
     cursor: pointer;
+    font-family: 'Clarkson Script', cursive;
 }
 
 .tag.selected {
-    background-color: #007BFF;
+    background-color: #4682B4;
     color: #fff;
 }
 
@@ -351,7 +386,7 @@ h3{
     border-radius: 4px;
     background-color: #F0F0F0;
     border: none;
-    color: #555555;
+    color: #4682B4;
     text-align: center;
     font-size: 14px;
     padding: 8px 12px;
@@ -363,5 +398,45 @@ h3{
 
 .button:hover {
     background-color: #DDDDDD;
+}
+
+.button-container {
+    max-width: 610px; /* Adjust the max-width as needed */
+    margin:  0 auto; /* Center the container horizontally */
+}
+
+.button-group {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Add this line */
+}
+
+.smaller-button.transparent-button {
+    flex: 1;
+    padding: 8px 16px;
+    font-size: 14px;
+    background-color: transparent4;
+    border: 1px solid #4682B4;
+    color: #000;
+    height: 38px;
+    margin: 5px;
+    font-family: 'Clarkson Script', cursive;
+    
+}
+
+.smaller-button.transparent-button:hover {
+    background-color: #4682B4;
+    color: #fff;
+}
+
+.delete-button {
+    background-color: #dc3545; /* Red background color */
+    color: #fff; /* White text color */
+    border-color: #dc3545; /* Red border color */
+}
+
+.delete-button:hover {
+    background-color: #c82333; /* Darker red on hover */
+    border-color: #bd2130; /* Darker red border on hover */
 }
 </style>

@@ -35,11 +35,12 @@ export default {
     width: 100%;
     top: 0;
     left: 0;
-    background: rgb(0,0,0,0);
+    background: rgba(0,0,0,0.15);
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
+  
 }
 
 .line {
@@ -79,5 +80,12 @@ export default {
     color: white; 
     cursor: pointer; 
     font-family: 'Clarkson Script', cursive; 
+    transition: transform 0.3s; /* Add transition for smooth effect */
+    background-color: #4682B4;
+}
+
+.btn:hover {
+    transform: scale(1.1); /* Scale the button on hover */
+    box-shadow: 0 4px 8 px 0 rgba(0,0,0,0.2);
 }
 </style>

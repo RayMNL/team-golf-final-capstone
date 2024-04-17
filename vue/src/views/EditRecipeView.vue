@@ -130,4 +130,11 @@ export default {
     /* Set button background color on hover */
     border-color: #20B2AA;
     /* Set button border color on hover */
-}</style>
+}
+
+form-control:focus {
+    border-color: #40E0D0; /* Change border color */
+    box-shadow: 0 0 0 0.2rem rgba(64, 224, 208, 0.25); /* Change glow color */
+}
+
+</style>

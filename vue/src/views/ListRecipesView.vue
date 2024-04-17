@@ -7,12 +7,14 @@
                 class="tag">{{ tag }}</span>
         </div>
         <div v-if="selectedRecipe">
+            <div class="button-container">
             <div class="button-group">
                 <button type="button" class="btn btn-outline-primary smaller-button transparent-button"
                     @click="selectedRecipe = null" id="back-to-recipes-button">Back to Recipes</button>
                 <button class="button smaller-button transparent-button" @click="addToLibrary(selectedRecipe.id)"
-                    id="add-to-recipe-library-button">Add to Recipe Library</button>
-                <button class="button smaller-button transparent-button" @click="printRecipe">Print Recipe</button>
+                    id="add-to-recipe-library-button"> Add to Recipe Library</button>
+                <button class="button smaller-button transparent-button" @click="printRecipe"> Print Recipe<i class = "bi bi-printer"> </i></button>
+            </div>
             </div>
             <div id="success-message" v-if="showMessage" class="success-banner">
                 {{ message }}
@@ -214,25 +216,25 @@ export default {
 }
 
 .tag.selected {
-    background-color: #40E0D0;
+    background-color: #4682B4;
     color: #fff;
-    border-color: #40E0D0;
+    border-color: #4682B4;
 }
 
 .tag.selected:hover {
-    background-color: #40E0D0;
-    border-color: #40E0D0;
+    background-color: #4682B4;
+    border-color: #4682B4;
 }
 
 .tag:hover {
-    background-color: #40E0D0;
+    background-color: #4682B4;
     color: #fff;
 }
 
 .recipe-details .tag {
-    background-color: #DDDDDD;
-    border-color: #DDDDDD;
-    color: #333333;
+    background-color: #4682B4;
+    border-color: #4682B4;
+    color: #DDDDDD;
 }
 
 .last-row-card {
@@ -307,15 +309,16 @@ div.tags-container {
     padding: 8px 16px;
     font-size: 14px;
     background-color: transparent;
-    border: 1px solid #40E0D0;
+    border: 1px solid #4682B4;
     color: #000;
     height: 38px;
     margin: 5px;
     font-family: 'Clarkson Script', cursive;
+    width: 10px;
 }
 
 .smaller-button.transparent-button:hover {
-    background-color: #40E0D0;
+    background-color: #4682B4;
     color: #fff;
 }
 
@@ -323,7 +326,7 @@ div.tags-container {
     flex: 1;
     border-radius: 4px;
     background-color: transparent;
-    border: 1px solid #40E0D0;
+    border: 1px solid #4682B4;
     color: #000;
     text-align: center;
     font-size: 14px;
@@ -336,8 +339,13 @@ div.tags-container {
     height: 38px;
 }
 
+.button-container {
+    max-width: 610px; /* Adjust the max-width as needed */
+    margin: 0 auto; /* Center the container horizontally */
+}
+
 .button.transparent-button:hover {
-    background-color: #40E0D0;
+    background-color: #4682B4;
     color: #fff;
 }
 
@@ -346,7 +354,7 @@ div.tags-container {
     top: 20px;
     left: 50%;
     transform: translateX(-50%);
-    background-color: #495057;
+    background-color: #4682B4;
     color: white;
     padding: 15px 20px;
     border-radius: 5px;

@@ -2,24 +2,24 @@
   <nav class="navbar">
     <div class="navbar-left">
       <div class="logo">
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkk7ktNLRvLeJW0kv-LaiR5EKd5POOjewEmQ&usqp=CAU"
+        <img src="../assets/logo.png"
           alt="Plate Logo" class="plate-logo">
-        <span class="brand">Kitchen Chronicles</span>
+        <router-link class="brand" v-bind:to="{ name: 'home' }">Kitchen Chronicles</router-link>
+        <span class="user" v-if="$store.state.token !== ''">Welcome, {{ currentUser }}!</span>
       </div>
     </div>
     <div class="navbar-right">
-      <router-link v-bind:to="{ name: 'home' }">Home</router-link>
+      <router-link v-bind:to="{ name: 'spoon' }" class="nav-link">Recipes</router-link>
       <span class="separator">|</span>
-      <router-link v-bind:to="{ name: 'spoon' }">Recipes</router-link>
-      <span class="separator">|</span>
-      <router-link v-bind:to="{ name: 'personal' }" v-if="$store.state.token !== ''">My Recipes</router-link>
+      <router-link v-bind:to="{ name: 'personal' }" v-if="$store.state.token !== ''" class="nav-link">My Recipes</router-link>
       <span class="separator" v-if="$store.state.token !== ''">|</span>
-      <router-link v-bind:to="{ name: 'custom' }" v-if="$store.state.token !== ''">Add Recipes</router-link>
+      <router-link v-bind:to="{ name: 'custom' }" v-if="$store.state.token !== ''" class="nav-link">Add Recipes</router-link>
       <span class="separator" v-if="$store.state.token !== ''">|</span>
-      <router-link v-bind:to="logoutOrLoginRoute" class="logout-link">{{ logoutOrLoginText }}</router-link>
+      <router-link v-bind:to="logoutOrLoginRoute" class="logout-link navbar-link">{{ logoutOrLoginText }}</router-link>
     </div>
   </nav>
 </template>
+
 <script>
 export default {
   name: 'Header',
@@ -29,11 +29,22 @@ export default {
     },
     logoutOrLoginText() {
       return this.$store.state.token !== '' ? 'Logout' : 'Login';
+    },
+    currentUser() {
+      return this.$store.state.user.username;
     }
+  },
+  mounted() {
+    // Add event listener to the dropdown toggle button
+    const dropdownToggle = document.querySelector('.dropdown-toggle');
+    dropdownToggle.addEventListener('click', function() {
+      const dropdownMenu = this.nextElementSibling;
+      dropdownMenu.classList.toggle('show');
+    });
   }
 }
 </script>
-  
+
 <style scoped>
 .navbar {
   background-color: #40E0D0;
@@ -61,13 +72,18 @@ export default {
 }
 
 .plate-logo {
-  width: 30px;
+  width: 50px;
   margin-right: 10px;
   border: none;
   padding: 0;
 }
 
 .brand {
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+}
+.user {
   color: white;
   font-weight: bold;
   font-size: 18px;
@@ -80,8 +96,8 @@ export default {
   border-radius: 5px;
 }
 
-.navbar a:hover {
-  background-color: #495057;
+.navbar .navbar-right .nav-link:hover {
+  background-color: #4682B4;
 }
 
 .separator {
@@ -91,5 +107,9 @@ export default {
 
 .logout-link {
   margin-left: auto;
+}
+
+.navbar-link:hover {
+  background-color: #4682B4;
 }
 </style>
