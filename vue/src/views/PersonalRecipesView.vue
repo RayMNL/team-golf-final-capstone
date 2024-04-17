@@ -10,11 +10,17 @@
             </div>
         </div>
             <div id="success-message" v-if="showMessage" class="success-banner">
+<<<<<<< HEAD
+        {{ message }}
+    </div>
+    
+=======
                 {{ message }}
             </div>
             <div id="success-message" v-if="showDeleteMessage" class="success-banner">
                 {{ deleteMessage }}
             </div>
+>>>>>>> dd7500772eac4f5f29c0864e52a8e99f7fe63650
             <div class="full-recipe">
                 <img :src="selectedRecipe.image" :alt="selectedRecipe.title" class="recipe-image">
                 <div class="recipe-details">

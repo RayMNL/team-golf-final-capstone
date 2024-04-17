@@ -19,7 +19,9 @@ export default {
 };
 </script>
 
+
 <style scoped>
+
 .big-image {
     height: 100vh;
     width: 100vw;
@@ -79,7 +81,9 @@ export default {
     text-decoration: none; 
     color: white; 
     cursor: pointer; 
+
     font-family: 'Clarkson Script', cursive; 
+
     transition: transform 0.3s; /* Add transition for smooth effect */
     background-color: #4682B4;
 }
@@ -87,5 +91,6 @@ export default {
 .btn:hover {
     transform: scale(1.1); /* Scale the button on hover */
     box-shadow: 0 4px 8 px 0 rgba(0,0,0,0.2);
+
 }
 </style>
