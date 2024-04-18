@@ -11,8 +11,7 @@
             <div class="button-group">
                 <button type="button" class="btn btn-outline-primary smaller-button transparent-button"
                     @click="selectedRecipe = null" id="back-to-recipes-button">Back to Recipes</button>
-                <button class="button smaller-button transparent-button" @click="addToLibrary(selectedRecipe.id)"
-                    id="add-to-recipe-library-button"> Add to Recipe Library</button>
+                    <button v-if="isLoggedIn" class="button smaller-button transparent-button" @click="addToLibrary(selectedRecipe.id)" id="add-to-recipe-library-button"> Add to Recipe Library</button>
                 <button class="button smaller-button transparent-button" @click="printRecipe"> Print Recipe<i class = "bi bi-printer"> </i></button>
             </div>
             </div>
@@ -92,6 +91,8 @@ export default {
     },
     created() {
         this.getDataFromSpoon();
+
+        this.isLoggedIn = this.$store.state.token
     },
     methods: {
         getDataFromSpoon() {

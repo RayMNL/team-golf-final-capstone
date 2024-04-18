@@ -51,9 +51,10 @@ export default {
     left: 50%;
     width: 1000px; 
     height: 300px; 
-    background-color: #40E0D0; 
+    background-color: rgba(64, 224, 208, 0.85); /* Adjust the alpha value (0.7 in this case) */
     transform: translate(-50%, -50%);
     z-index: 2; 
+    border-radius: 20px; /* Adjust the value as needed */
 }
 
 .text-big {

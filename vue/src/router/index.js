@@ -77,7 +77,7 @@ const routes = [
     }
   },
   {
-    path: "/edit-recipe", // Define the route for editing recipe
+    path: "/edit-recipe/:recipeId", // Define the route for editing recipe
     name: "editRecipe",
     component: EditRecipeView, // Associate with the EditRecipeView component
     meta: {

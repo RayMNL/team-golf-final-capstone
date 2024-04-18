@@ -7,8 +7,7 @@
                 <div class="card-body">
                     <div class="form-group">
                         <label for="recipeName">Recipe Name</label>
-                        <input type="text" class="form-control" id="recipeName" v-model="editedRecipe.name"
-                            placeholder="Recipe Name...">
+                        <input type="text" class="form-control" id="recipeName" v-model="editedRecipe.name">
                     </div>
                     <div class="form-group">
                         <label for="ingredients">Ingredients</label>
@@ -53,14 +52,15 @@ export default {
     },
     created() {
         // When the component is created, populate editedRecipe with selectedRecipe data
-        this.editedRecipe = this.$store.state.selectedRecipe
+        const recipeId = this.$route.params.recipeId;
+        // this.editedRecipe = this.$store.state.selectedRecipe
         console.log(this.editedRecipe);
-        if (this.selectedRecipe) {
-            this.editedRecipe.name = this.selectedRecipe.name;
-            this.editedRecipe.ingredients = this.selectedRecipe.ingredients;
-            this.editedRecipe.instructions = this.selectedRecipe.instructions;
-            this.editedRecipe.img = this.selectedRecipe.img;
-        }
+        CustomService.getRecipeById(recipeId)
+            .then(response => {
+                console.log("in .then: ", response.data);
+                this.editedRecipe = response.data
+            })
+
     },
     methods: {
         saveEditedRecipe() {
@@ -131,10 +131,4 @@ export default {
     border-color: #20B2AA;
     /* Set button border color on hover */
 }
-
-form-control:focus {
-    border-color: #40E0D0; /* Change border color */
-    box-shadow: 0 0 0 0.2rem rgba(64, 224, 208, 0.25); /* Change glow color */
-}
-
 </style>

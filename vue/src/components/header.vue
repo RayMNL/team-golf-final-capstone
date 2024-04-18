@@ -87,6 +87,7 @@ export default {
   color: white;
   font-weight: bold;
   font-size: 18px;
+  margin-left: 75px;
 }
 
 .navbar a {

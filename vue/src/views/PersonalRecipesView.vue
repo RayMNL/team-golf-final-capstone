@@ -10,17 +10,15 @@
             </div>
         </div>
             <div id="success-message" v-if="showMessage" class="success-banner">
-<<<<<<< HEAD
-        {{ message }}
-    </div>
-    
-=======
+
+
                 {{ message }}
             </div>
             <div id="success-message" v-if="showDeleteMessage" class="success-banner">
                 {{ deleteMessage }}
             </div>
->>>>>>> dd7500772eac4f5f29c0864e52a8e99f7fe63650
+
+
             <div class="full-recipe">
                 <img :src="selectedRecipe.image" :alt="selectedRecipe.title" class="recipe-image">
                 <div class="recipe-details">
@@ -96,6 +94,7 @@
     </div>
 </template>
 
+
 <script>
 import SpoonService from '@/services/SpoonService';
 import LocalApiService from '../services/LocalApiService';
@@ -117,10 +116,6 @@ export default {
                 instructions: '',
                 img: ''
             },
-            showMessage: false,
-            message: "",
-            showDeleteMessage: false,
-            deleteMessage: ""
         }
     },
     computed: {
@@ -185,12 +180,14 @@ export default {
             recipe.showDetails = !recipe.showDetails;
         },
         getRecipeInfoById(recipe){
-          const recipeId = this.$route.params.recipeId;
+            console.log("In get recipe info by id: ", recipe);
+        //   const recipeId = this.$route.params.recipeId;
           CustomService.getRecipeById(recipe.recipeId)
                 .then(response => {
+                    console.log("in .then: ", response.data);
                     this.newRecipe = response.data;
                     this.$store.state.selectedRecipe=response.data;
-                    this.$router.push({ name: 'editRecipe', params: { recipeId: recipe.recipeId }})
+                    this.$router.push({ name: 'editRecipe', params: { recipeId: this.newRecipe.recipeId }})
                     console.log('This is the newRecipe object we are passing : ', this.newRecipe);
                 }).catch(err => console.error(err));
         },
@@ -233,6 +230,7 @@ deleteFromFavorite(selectedRecipe) {
 }
 </script>
 
+
 <style scoped>
 .delete-custom-button {
     position: absolute;
@@ -258,6 +256,7 @@ deleteFromFavorite(selectedRecipe) {
     padding: 20px;
 }
 
+
 .recipe-container,
 .custom-new-recipes {
     display: flex;
@@ -266,6 +265,7 @@ deleteFromFavorite(selectedRecipe) {
     gap: 20px;
     margin-right: auto;
 }
+
 
 .recipe-card,
 .custom-recipe-card {
@@ -281,11 +281,13 @@ deleteFromFavorite(selectedRecipe) {
     background-color: #40E0D0; /* Blue background color */
 }
 
+
 .custom-recipe-card.expanded {
     position: absolute; /* Change to absolute positioning */
     width: 100%; /* Expand to full width */
     z-index: 1; /* Ensure the expanded card is above other elements */
 }
+
 
 .recipe-image,
 .custom-recipe-image {
@@ -303,18 +305,22 @@ deleteFromFavorite(selectedRecipe) {
     max-height: 200px;
 }
 
+
 .recipe-details,
 .custom-recipe-details {
     padding: 10px;
 }
 
+
 .recipe-title{
     font-size: 25px;
 }
 
+
 h2 {
     font-family: 'Clarkson Script', cursive;
 }
+
 
 h3{
     font-size: 18px;
@@ -323,10 +329,12 @@ h3{
     margin: 0;
 }
 
+
 .recipe-tags,
 .custom-recipe-tags {
     margin-top: 10px;
 }
+
 
 .tag {
     display: inline-block;
@@ -340,16 +348,19 @@ h3{
     font-family: 'Clarkson Script', cursive;
 }
 
+
 .tag.selected {
     background-color: #4682B4;
     color: #fff;
 }
+
 
 .recipe-card:hover,
 .custom-recipe-card:hover {
     box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2); /* Add box-shadow on hover */
     transform: translate(2px, 2px); /* Move the card 2px down and 2px right */
 }
+
 
 .full-recipe,
 .custom-full-recipe {
@@ -361,16 +372,19 @@ h3{
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+
 .full-recipe:hover,
 .custom-full-recipe:hover {
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
+
 
 .full-recipe .recipe-title,
 .custom-full-recipe .custom-recipe-title {
     font-size: 24px;
     margin-bottom: 10px;
 }
+
 
 .full-recipe .recipe-image,
 .custom-full-recipe .custom-recipe-image {
@@ -381,11 +395,13 @@ h3{
     margin-bottom: 10px;
 }
 
+
 .full-recipe .recipe-details,
 .custom-full-recipe .custom-recipe-details {
     font-size: 16px;
     line-height: 1.5;
 }
+
 
 .button {
     display: inline-block;
@@ -402,14 +418,17 @@ h3{
     text-decoration: none;
 }
 
+
 .button:hover {
     background-color: #DDDDDD;
 }
+
 
 .button-container {
     max-width: 610px; /* Adjust the max-width as needed */
     margin:  0 auto; /* Center the container horizontally */
 }
+
 
 .button-group {
     display: flex;
@@ -417,10 +436,12 @@ h3{
     justify-content: center; /* Add this line */
 }
 
+
 .smaller-button.transparent-button {
-    flex: 1;
+    flex: 1; 
     padding: 8px 16px;
     font-size: 14px;
+    font-weight: bold;
     background-color: transparent4;
     border: 1px solid #4682B4;
     color: #000;
@@ -430,16 +451,19 @@ h3{
     
 }
 
+
 .smaller-button.transparent-button:hover {
     background-color: #4682B4;
     color: #fff;
 }
+
 
 .delete-button {
     background-color: #dc3545; /* Red background color */
     color: #fff; /* White text color */
     border-color: #dc3545; /* Red border color */
 }
+
 
 .delete-button:hover {
     background-color: #c82333; /* Darker red on hover */
